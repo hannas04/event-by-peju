@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Events by Peju Black | Event Producer & Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --black: #0A0A0A;
+    --charcoal: #141414;
+    --deep: #1C1C1C;
+    --crimson: #C41E3A;
+    --crimson-light: #E8234A;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --white: #F5F0E8;
+    --muted: #9A9390;
+    --grad: linear-gradient(135deg, #C41E3A 0%, #C9A84C 100%);
+    --grad-rev: linear-gradient(135deg, #C9A84C 0%, #C41E3A 100%);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CURSOR ── */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--crimson);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: normal;
+  }
+  .cursor-follower {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s ease, width 0.3s, height 0.3s, border-color 0.3s;
+  }
+  .cursor-follower.hover { width: 56px; height: 56px; border-color: var(--gold); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 900;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 60px;
+    transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(20px);
+    padding: 14px 60px;
+    border-bottom: 1px solid rgba(196,30,58,0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600;
+    letter-spacing: 0.08em;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: rgba(245,240,232,0.7);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--grad);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold) !important;
+    padding: 8px 24px;
+    border-radius: 2px;
+    transition: background 0.3s, color 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; -webkit-text-fill-color: var(--black) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* Mobile hamburger */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 26px; height: 1.5px; background: var(--white); transition: all 0.3s; }
+  .mobile-menu {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10,10,10,0.98);
+    z-index: 800;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem; color: var(--white);
+    text-decoration: none; letter-spacing: 0.08em;
+    transition: color 0.3s;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  #hero {
+    height: 100vh; min-height: 700px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(196,30,58,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 50%),
+                var(--black);
+  }
+  /* Animated ring inspired by logo */
+  .hero-ring {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background: linear-gradient(var(--black), var(--black)) padding-box,
+                var(--grad) border-box;
+    animation: ringRotate 12s linear infinite;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .hero-ring:nth-child(2) { width: 800px; height: 800px; animation-duration: 20s; animation-direction: reverse; opacity: 0.08; }
+  .hero-ring:nth-child(3) { width: 1000px; height: 1000px; animation-duration: 30s; opacity: 0.05; }
+  @keyframes ringRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 20px; }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title span {
+    font-style: italic;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    color: rgba(245,240,232,0.6);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.8s ease 1.1s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 40px;
+    background: var(--grad);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: 2px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none; cursor: none;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 50px rgba(196,30,58,0.35); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 40px;
+    border: 1px solid rgba(245,240,232,0.25);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: 2px;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: none;
+  }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeUp 0.8s ease 1.5s forwards;
+    z-index: 2;
+  }
+  .hero-scroll span { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.4; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.1); } }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex; align-items: center; gap: 20px;
+    margin: 0 60px;
+  }
+  .divider-line { flex: 1; height: 1px; background: rgba(245,240,232,0.08); }
+  .divider-icon { color: var(--gold); font-size: 0.7rem; opacity: 0.5; }
+
+  /* ── SECTIONS ── */
+  section { padding: 120px 60px; }
+  .section-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+  .section-title em { font-style: italic; color: var(--crimson); }
+  .section-body {
+    font-size: 0.95rem; line-height: 1.85;
+    color: rgba(245,240,232,0.65);
+    max-width: 560px;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--charcoal); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
+    align-items: center; max-width: 1200px; margin: 0 auto;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-img-frame {
+    width: 100%; aspect-ratio: 3/4;
+    background: var(--deep);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .about-img-frame::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(196,30,58,0.3) 100%);
+    z-index: 1;
+  }
+  .about-initials {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem; font-weight: 300;
+    color: rgba(245,240,232,0.06);
+    letter-spacing: -0.05em;
+    z-index: 0;
+  }
+  .about-badge {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: var(--grad);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 2;
+    box-shadow: 0 20px 50px rgba(196,30,58,0.3);
+  }
+  .about-badge span:first-child { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--white); line-height: 1; }
+  .about-badge span:last-child { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.8); }
+  .about-accent-line {
+    position: absolute; top: 30px; left: -30px;
+    width: 1px; height: 60%;
+    background: var(--grad);
+    opacity: 0.4;
+  }
+
+  .about-text .section-body { max-width: 100%; }
+  .about-text .section-body + .section-body { margin-top: 16px; }
+  .about-pillars {
+    margin-top: 40px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(245,240,232,0.06);
+    border-radius: 4px; overflow: hidden;
+  }
+  .pillar {
+    padding: 24px 20px;
+    background: var(--charcoal);
+    text-align: center;
+    transition: background 0.3s;
+  }
+  .pillar:hover { background: rgba(201,168,76,0.05); }
+  .pillar i { font-size: 1.1rem; color: var(--gold); margin-bottom: 10px; display: block; }
+  .pillar span { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+  /* ── SERVICES ── */
+  #services { background: var(--black); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+    max-width: 1200px; margin: 60px auto 0;
+    background: rgba(245,240,232,0.04);
+    border: 1px solid rgba(245,240,232,0.06);
+    border-radius: 4px; overflow: hidden;
+  }
+  .service-card {
+    background: var(--black);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--grad);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+  }
+  .service-card:hover { background: rgba(201,168,76,0.03); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 300;
+    color: rgba(245,240,232,0.04);
+    position: absolute; top: 20px; right: 24px;
+    line-height: 1;
+  }
+  .service-icon {
+    width: 48px; height: 48px;
+    border-radius: 2px;
+    background: rgba(196,30,58,0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    transition: background 0.3s;
+  }
+  .service-card:hover .service-icon { background: rgba(196,30,58,0.18); }
+  .service-icon i { color: var(--crimson); font-size: 1.1rem; }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 500;
+    margin-bottom: 14px;
+    letter-spacing: 0.02em;
+  }
+  .service-desc { font-size: 0.85rem; line-height: 1.8; color: rgba(245,240,232,0.55); }
+  .service-items {
+    margin-top: 20px; padding-top: 20px;
+    border-top: 1px solid rgba(245,240,232,0.06);
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .service-tag {
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.2); border-radius: 2px;
+    padding: 4px 10px; color: var(--gold);
+  }
+
+  /* ── STATS ── */
+  #stats {
+    padding: 80px 60px;
+    background: var(--grad);
+    position: relative; overflow: hidden;
+  }
+  #stats::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 2px;
+    max-width: 1000px; margin: 0 auto;
+    position: relative;
+  }
+  .stat-item { text-align: center; padding: 20px; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 300; color: var(--white);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.75); margin-top: 8px; }
+
+  /* ── GALLERY ── */
+  #gallery { background: var(--charcoal); padding-bottom: 80px; }
+  .gallery-intro { max-width: 600px; margin-bottom: 60px; }
+  .gallery-masonry {
+    columns: 3; gap: 12px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    cursor: none;
+  }
+  .gallery-placeholder {
+    width: 100%;
+    background: var(--deep);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+  }
+  .gallery-item:hover .gallery-placeholder { transform: scale(1.03); }
+  .gallery-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(10,10,10,0.7));
+    z-index: 1; opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .gallery-item:hover .gallery-placeholder::before { opacity: 1; }
+  .gallery-label {
+    position: absolute; bottom: 14px; left: 16px; right: 16px;
+    z-index: 2;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-style: italic;
+    color: var(--white); opacity: 0;
+    transition: opacity 0.4s, transform 0.4s;
+    transform: translateY(6px);
+  }
+  .gallery-item:hover .gallery-label { opacity: 1; transform: translateY(0); }
+
+  /* Colored placeholder blocks */
+  .g1 { height: 280px; background: linear-gradient(135deg, #1a0a0d, #2d1219); }
+  .g2 { height: 200px; background: linear-gradient(135deg, #0f0f0a, #1f1e13); }
+  .g3 { height: 340px; background: linear-gradient(135deg, #0a0a12, #141422); }
+  .g4 { height: 220px; background: linear-gradient(135deg, #120808, #1e1010); }
+  .g5 { height: 300px; background: linear-gradient(135deg, #0a1210, #12201d); }
+  .g6 { height: 180px; background: linear-gradient(135deg, #141012, #22181f); }
+  .g7 { height: 260px; background: linear-gradient(135deg, #0e0e14, #1a1a28); }
+  .g8 { height: 320px; background: linear-gradient(135deg, #100808, #200e0e); }
+  .g9 { height: 190px; background: linear-gradient(135deg, #0a1008, #141e10); }
+  .gallery-icon {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(245,240,232,0.06);
+    font-size: 3rem;
+  }
+  .gallery-grad-overlay {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 70%, rgba(196,30,58,0.15), transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── PROCESS ── */
+  #process { background: var(--black); }
+  .process-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
+    max-width: 1200px; margin: 0 auto; align-items: center;
+  }
+  .process-steps { display: flex; flex-direction: column; gap: 2px; }
+  .step {
+    display: flex; gap: 24px; align-items: flex-start;
+    padding: 28px;
+    border: 1px solid rgba(245,240,232,0.05);
+    border-radius: 3px;
+    background: transparent;
+    transition: background 0.3s, border-color 0.3s;
+    cursor: none;
+  }
+  .step:hover { background: rgba(201,168,76,0.04); border-color: rgba(201,168,76,0.15); }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    min-width: 44px;
+    line-height: 1;
+  }
+  .step-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; margin-bottom: 8px;
+  }
+  .step-content p { font-size: 0.84rem; color: rgba(245,240,232,0.55); line-height: 1.75; }
+
+  .process-visual {
+    position: relative; display: flex; flex-direction: column; align-items: center;
+  }
+  .process-ring-wrapper {
+    width: 300px; height: 300px;
+    position: relative; display: flex; align-items: center; justify-content: center;
+    margin: 0 auto;
+  }
+  .proc-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid transparent;
+  }
+  .proc-ring-1 {
+    inset: 0;
+    background: linear-gradient(var(--black), var(--black)) padding-box,
+                var(--grad) border-box;
+    animation: ringRotate 8s linear infinite;
+  }
+  .proc-ring-2 {
+    inset: 30px;
+    background: linear-gradient(var(--black), var(--black)) padding-box,
+                var(--grad-rev) border-box;
+    animation: ringRotate 5s linear infinite reverse;
+    opacity: 0.5;
+  }
+  .proc-center {
+    position: relative; z-index: 2;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .proc-center span:first-child { display: block; font-size: 3.5rem; font-weight: 300; line-height: 1; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .proc-center span:last-child { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--charcoal); }
+  .testimonials-header { max-width: 600px; margin-bottom: 60px; }
+  .testimonials-track {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+    background: rgba(245,240,232,0.04);
+    border-radius: 4px; overflow: hidden;
+  }
+  .testi-card {
+    background: var(--charcoal);
+    padding: 44px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .testi-card:hover { background: rgba(196,30,58,0.04); }
+  .testi-card::before {
+    content: '\f10d';
+    font-family: 'Font Awesome 6 Free'; font-weight: 900;
+    position: absolute; top: 20px; right: 24px;
+    font-size: 2.5rem;
+    color: rgba(196,30,58,0.07);
+  }
+  .testi-stars { color: var(--gold); font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 20px; }
+  .testi-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.12rem; font-style: italic;
+    line-height: 1.75; color: rgba(245,240,232,0.85);
+    margin-bottom: 28px;
+  }
+  .testi-divider { width: 40px; height: 1px; background: var(--grad); margin-bottom: 18px; }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .testi-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 2px; }
+  .testi-role { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
+
+  /* Slider nav */
+  .testi-nav { display: flex; gap: 10px; justify-content: center; margin-top: 40px; }
+  .testi-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(245,240,232,0.2);
+    border: none; cursor: none;
+    transition: background 0.3s, width 0.3s;
+  }
+  .testi-dot.active { background: var(--gold); width: 24px; border-radius: 3px; }
+
+  /* ── CTA BAND ── */
+  #cta {
+    padding: 100px 60px;
+    background: var(--black);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,30,58,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-content { position: relative; max-width: 700px; margin: 0 auto; }
+  .cta-content .section-title { font-size: clamp(2.2rem, 4vw, 3.4rem); margin-bottom: 16px; }
+  .cta-content .section-body { margin: 0 auto 40px; text-align: center; max-width: 480px; }
+  .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--charcoal); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 32px; }
+  .contact-detail {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 24px; border: 1px solid rgba(245,240,232,0.06);
+    border-radius: 3px; transition: border-color 0.3s;
+  }
+  .contact-detail:hover { border-color: rgba(201,168,76,0.2); }
+  .contact-detail-icon {
+    width: 40px; height: 40px; border-radius: 2px;
+    background: rgba(196,30,58,0.1);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-detail-icon i { color: var(--crimson); font-size: 0.9rem; }
+  .contact-detail-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .contact-detail-val { font-size: 0.9rem; color: var(--white); }
+  .contact-detail-val a { color: inherit; text-decoration: none; transition: color 0.3s; }
+  .contact-detail-val a:hover { color: var(--gold); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(245,240,232,0.04);
+    border: 1px solid rgba(245,240,232,0.08);
+    border-radius: 2px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(245,240,232,0.25); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--crimson);
+    background: rgba(196,30,58,0.04);
+  }
+  .form-group select option { background: var(--charcoal); }
+  .form-group textarea { min-height: 120px; resize: vertical; }
+  .form-submit {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 16px 40px;
+    background: var(--grad);
+    color: var(--white); border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+    border-radius: 2px; cursor: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 20px 50px rgba(196,30,58,0.3); }
+
+  /* ── INSTAGRAM ── */
+  #instagram { background: var(--black); padding: 80px 60px; }
+  .insta-header { text-align: center; margin-bottom: 48px; }
+  .insta-handle {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .insta-grid {
+    display: grid; grid-template-columns: repeat(6,1fr); gap: 4px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .insta-cell {
+    aspect-ratio: 1;
+    background: var(--deep);
+    position: relative; overflow: hidden;
+    cursor: none;
+  }
+  .insta-cell::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--grad);
+    opacity: 0; transition: opacity 0.4s;
+    z-index: 1;
+  }
+  .insta-cell:hover::before { opacity: 0.4; }
+  .insta-cell i {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    color: rgba(245,240,232,0.08);
+  }
+  .insta-inner-grad {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 40% 60%, rgba(196,30,58,0.18), transparent);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060606;
+    padding: 70px 60px 30px;
+    border-top: 1px solid rgba(245,240,232,0.05);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+    max-width: 1200px; margin: 0 auto 60px;
+  }
+  .footer-brand .nav-logo { font-size: 1.8rem; margin-bottom: 16px; display: block; }
+  .footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.8; max-width: 280px; }
+  .footer-social { display: flex; gap: 12px; margin-top: 24px; }
+  .social-btn {
+    width: 38px; height: 38px;
+    border: 1px solid rgba(245,240,232,0.1);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+    font-size: 0.85rem;
+  }
+  .social-btn:hover { border-color: var(--crimson); color: var(--white); background: rgba(196,30,58,0.1); }
+  .footer-col h4 {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.84rem;
+    transition: color 0.3s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-col ul li a i { font-size: 0.6rem; color: var(--crimson); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    border-top: 1px solid rgba(245,240,232,0.05);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(154,147,144,0.6); }
+  .footer-bottom span { font-size: 0.75rem; color: rgba(154,147,144,0.4); }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0; transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-left.in-view { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0; transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right.in-view { opacity: 1; transform: translateX(0); }
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+  .delay-4 { transition-delay: 0.4s; }
+  .delay-5 { transition-delay: 0.5s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    section { padding: 80px 40px; }
+    nav { padding: 20px 40px; }
+    nav.scrolled { padding: 14px 40px; }
+    .about-grid, .process-grid, .contact-grid { grid-template-columns: 1fr; gap: 60px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .testimonials-track { grid-template-columns: 1fr; }
+    .testi-card:not(:first-child) { display: none; }
+    .stats-grid { grid-template-columns: repeat(2,1fr); }
+    .gallery-masonry { columns: 2; }
+    .insta-grid { grid-template-columns: repeat(3,1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    section { padding: 70px 24px; }
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .services-grid { grid-template-columns: 1fr; }
+    .gallery-masonry { columns: 1; }
+    .insta-grid { grid-template-columns: repeat(3,1fr); }
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-pillars { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    #stats { padding: 60px 24px; }
+    .divider { margin: 0 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Peju Black</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#testimonials" onclick="closeMobile()">Testimonials</a>
+  <a href="#contact" onclick="closeMobile()">Book Now</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">
+      <i class="fa-solid fa-gem" style="margin-right:8px;font-size:0.65rem;"></i>
+      Lagos · Nigeria · Est. 2020
+    </p>
+    <h1 class="hero-title">
+      Events by<br><span>Peju Black</span>
+    </h1>
+    <p class="hero-subtitle">Event Producer &amp; Designer</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <i class="fa-regular fa-calendar"></i>
+        Book Your Event
+      </a>
+      <a href="#gallery" class="btn-outline">
+        <i class="fa-regular fa-images"></i>
+        View Our Work
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true">
+  <div class="divider-line"></div>
+  <i class="fa-solid fa-diamond divider-icon"></i>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal-left">
+      <div class="about-accent-line"></div>
+      <div class="about-img-frame">
+        <div class="about-initials">OO</div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;z-index:1;">
+          <i class="fa-solid fa-star" style="color:rgba(196,30,58,0.3);font-size:2rem;"></i>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1rem;letter-spacing:0.1em;color:rgba(245,240,232,0.2);text-transform:uppercase;">Oyepeju Ojikutu</span>
+        </div>
+      </div>
+      <div class="about-badge">
+        <span>5+</span>
+        <span>Years</span>
+      </div>
+    </div>
+    <div class="about-text reveal-right">
+      <p class="section-eyebrow">
+        <i class="fa-solid fa-circle-dot" style="margin-right:6px;font-size:0.5rem;"></i>
+        Our Story
+      </p>
+      <h2 class="section-title">Crafting <em>Moments</em><br>That Live Forever</h2>
+      <p class="section-body">
+        Events by Peju Black is the creative vision of Oyepeju Ojikutu — a distinguished event producer and designer based in Lagos, Nigeria. We transform concepts into extraordinary experiences that resonate long after the final guest has departed.
+      </p>
+      <p class="section-body" style="margin-top:16px;">
+        From intimate social gatherings to grand corporate productions and breathtaking weddings, every event is treated as a blank canvas for storytelling, luxury, and precision.
+      </p>
+      <div class="about-pillars reveal delay-2">
+        <div class="pillar">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>Corporate</span>
+        </div>
+        <div class="pillar">
+          <i class="fa-solid fa-champagne-glasses"></i>
+          <span>Social</span>
+        </div>
+        <div class="pillar">
+          <i class="fa-solid fa-ring"></i>
+          <span>Weddings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-eyebrow reveal">
+      <i class="fa-solid fa-circle-dot" style="margin-right:6px;font-size:0.5rem;"></i>
+      What We Do
+    </p>
+    <h2 class="section-title reveal delay-1">Our <em>Services</em></h2>
+    <div class="services-grid reveal delay-2">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon"><i class="fa-solid fa-briefcase"></i></div>
+        <h3 class="service-name">Corporate Events</h3>
+        <p class="service-desc">Professional event production for brands and organizations that demand excellence. From product launches to annual galas, we manage every detail.</p>
+        <div class="service-items">
+          <span class="service-tag">Product Launches</span>
+          <span class="service-tag">Award Nights</span>
+          <span class="service-tag">Conferences</span>
+          <span class="service-tag">Galas</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+        <h3 class="service-name">Social Events</h3>
+        <p class="service-desc">Birthday celebrations, milestone parties, and intimate gatherings elevated to unforgettable occasions tailored uniquely to you.</p>
+        <div class="service-items">
+          <span class="service-tag">Birthdays</span>
+          <span class="service-tag">Anniversaries</span>
+          <span class="service-tag">Baby Showers</span>
+          <span class="service-tag">Dinners</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon"><i class="fa-solid fa-ring"></i></div>
+        <h3 class="service-name">Weddings</h3>
+        <p class="service-desc">Your love story deserves a setting as extraordinary as your bond. We design and produce weddings that are visually stunning and emotionally memorable.</p>
+        <div class="service-items">
+          <span class="service-tag">Traditional</span>
+          <span class="service-tag">White Wedding</span>
+          <span class="service-tag">Décor</span>
+          <span class="service-tag">Full Planning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal delay-1">
+      <span class="stat-num" data-count="250">0</span>
+      <p class="stat-label"><i class="fa-solid fa-star" style="margin-right:6px;"></i>Events Produced</p>
+    </div>
+    <div class="stat-item reveal delay-2">
+      <span class="stat-num" data-count="5">0</span>
+      <p class="stat-label"><i class="fa-solid fa-calendar" style="margin-right:6px;"></i>Years of Excellence</p>
+    </div>
+    <div class="stat-item reveal delay-3">
+      <span class="stat-num" data-count="100">0</span>
+      <p class="stat-label"><i class="fa-solid fa-heart" style="margin-right:6px;"></i>Happy Couples</p>
+    </div>
+    <div class="stat-item reveal delay-4">
+      <span class="stat-num" data-count="98">0</span>
+      <p class="stat-label"><i class="fa-solid fa-thumbs-up" style="margin-right:6px;"></i>Client Satisfaction %</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── GALLERY ── -->
+<section id="gallery">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="gallery-intro reveal">
+      <p class="section-eyebrow">
+        <i class="fa-solid fa-circle-dot" style="margin-right:6px;font-size:0.5rem;"></i>
+        Our Portfolio
+      </p>
+      <h2 class="section-title">A <em>Visual</em> Story</h2>
+      <p class="section-body">Every event we produce is a work of art. Explore moments captured from our most cherished productions across Nigeria and beyond.</p>
+    </div>
+    <div class="gallery-masonry reveal delay-1">
+      <div class="gallery-item">
+        <div class="gallery-placeholder g1">
+          <div class="gallery-icon"><i class="fa-solid fa-people-group"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">Traditional Wedding · Lagos</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder g2">
+          <div class="gallery-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">Anniversary Gala</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder g3">
+          <div class="gallery-icon"><i class="fa-solid fa-ring"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">White Wedding · Abuja</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder g4">
+          <div class="gallery-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">Corporate Launch</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder g5">
+          <div class="gallery-icon"><i class="fa-solid fa-cake-candles"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">50th Birthday Celebration</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder g6">
+          <div class="gallery-icon"><i class="fa-solid fa-star"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">Award Night</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder g7">
+          <div class="gallery-icon"><i class="fa-solid fa-heart"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">Engagement Decor</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder g8">
+          <div class="gallery-icon"><i class="fa-solid fa-building"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">Corporate Gala</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder g9">
+          <div class="gallery-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <div class="gallery-grad-overlay"></div>
+        </div>
+        <div class="gallery-label">Luxury Social Event</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section id="process">
+  <div class="process-grid">
+    <div class="reveal-left">
+      <p class="section-eyebrow">
+        <i class="fa-solid fa-circle-dot" style="margin-right:6px;font-size:0.5rem;"></i>
+        How We Work
+      </p>
+      <h2 class="section-title" style="margin-bottom:40px;">Our <em>Process</em></h2>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Discovery Consultation</h3>
+            <p>We listen deeply to understand your vision, preferences, budget, and the emotion you want your event to evoke.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Concept &amp; Design</h3>
+            <p>Our team crafts a tailored event concept, complete with mood boards, themes, floor plans, and vendor curation.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Production &amp; Coordination</h3>
+            <p>We manage every moving part — logistics, vendors, timelines — so you can enjoy the experience stress-free.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Flawless Execution</h3>
+            <p>On the day, our team is on-site ensuring every detail unfolds perfectly from first arrival to final farewell.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-visual reveal-right">
+      <div class="process-ring-wrapper">
+        <div class="proc-ring proc-ring-1"></div>
+        <div class="proc-ring proc-ring-2"></div>
+        <div class="proc-center">
+          <span>✦</span>
+          <span style="font-size:0.65rem;margin-top:6px;">Events by Peju Black</span>
+        </div>
+      </div>
+      <div style="margin-top:48px;padding:32px;border:1px solid rgba(245,240,232,0.06);border-radius:4px;text-align:center;">
+        <i class="fa-solid fa-award" style="font-size:2rem;color:var(--gold);margin-bottom:14px;"></i>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;margin-bottom:8px;">Verified &amp; Trusted</p>
+        <p style="font-size:0.8rem;color:var(--muted);">Trusted by corporate brands, families, and couples across Nigeria</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="testimonials-header reveal">
+      <p class="section-eyebrow">
+        <i class="fa-solid fa-circle-dot" style="margin-right:6px;font-size:0.5rem;"></i>
+        Testimonials
+      </p>
+      <h2 class="section-title">Words From Our <em>Clients</em></h2>
+    </div>
+    <div class="testimonials-track reveal delay-1">
+      <div class="testi-card">
+        <div class="testi-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="testi-text">"Peju and her team turned our wedding into a dream we didn't even know we had. Every detail was perfect — the décor, the flow, the ambiance. Guests are still talking about it months later."</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">AO</div>
+          <div>
+            <p class="testi-name">Adunola &amp; Segun</p>
+            <p class="testi-role">Wedding Clients · Lagos</p>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="testi-text">"Our annual corporate dinner had never looked so polished. Events by Peju Black delivered a luxury experience that aligned perfectly with our brand identity. Truly professional."</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">TK</div>
+          <div>
+            <p class="testi-name">Tolulope K.</p>
+            <p class="testi-role">Corporate Client · Victoria Island</p>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="testi-text">"My 40th birthday was nothing short of magical. Peju understood my vision better than I did and executed it flawlessly. I will be recommending her to every single person I know."</p>
+        <div class="testi-divider"></div>
+        <div class="testi-author">
+          <div class="testi-avatar">FM</div>
+          <div>
+            <p class="testi-name">Folake M.</p>
+            <p class="testi-role">Birthday Celebration · Lekki</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-nav reveal delay-2">
+      <button class="testi-dot active" aria-label="Testimonial 1"></button>
+      <button class="testi-dot" aria-label="Testimonial 2"></button>
+      <button class="testi-dot" aria-label="Testimonial 3"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="cta">
+  <div class="cta-content reveal">
+    <p class="section-eyebrow">
+      <i class="fa-solid fa-circle-dot" style="margin-right:6px;font-size:0.5rem;"></i>
+      Let's Create Together
+    </p>
+    <h2 class="section-title">Ready to Plan Your <em>Dream</em> Event?</h2>
+    <p class="section-body">Whether you're planning an intimate gathering or a grand celebration, we're here to make it extraordinary. Reach out today to begin.</p>
+    <div class="cta-actions">
+      <a href="#contact" class="btn-primary">
+        <i class="fa-regular fa-envelope"></i>
+        Send Us a Message
+      </a>
+      <a href="https://www.instagram.com/eventsbypejublack" target="_blank" class="btn-outline">
+        <i class="fa-brands fa-instagram"></i>
+        View on Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="margin-bottom:60px;" class="reveal">
+      <p class="section-eyebrow">
+        <i class="fa-solid fa-circle-dot" style="margin-right:6px;font-size:0.5rem;"></i>
+        Get In Touch
+      </p>
+      <h2 class="section-title">Book Your <em>Event</em></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal-left">
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fa-solid fa-paper-plane"></i></div>
+          <div>
+            <p class="contact-detail-label">Direct Message</p>
+            <p class="contact-detail-val"><a href="https://www.instagram.com/eventsbypejublack" target="_blank">@eventsbypejublack</a></p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div>
+            <p class="contact-detail-label">Email Us</p>
+            <p class="contact-detail-val"><a href="mailto:bookings@eventsbypejublack.com">bookings@eventsbypejublack.com</a></p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fa-brands fa-whatsapp"></i></div>
+          <div>
+            <p class="contact-detail-label">WhatsApp</p>
+            <p class="contact-detail-val"><a href="https://wa.me/234000000000">+234 — Available via DM</a></p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div>
+            <p class="contact-detail-label">Based In</p>
+            <p class="contact-detail-val">Lagos, Nigeria</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal-right">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Oyinkan">
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Adeyemi">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="hello@example.com">
+        </div>
+        <div class="form-group">
+          <label for="etype">Event Type</label>
+          <select id="etype">
+            <option value="" disabled selected>Select event type</option>
+            <option>Wedding</option>
+            <option>Corporate Event</option>
+            <option>Birthday / Social</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Event Date</label>
+          <input type="date" id="date">
+        </div>
+        <div class="form-group">
+          <label for="msg">Your Message</label>
+          <textarea id="msg" placeholder="Tell us about your vision, guest count, and any special requests..."></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit(event)">
+          <i class="fa-solid fa-paper-plane"></i>
+          Send Enquiry
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INSTAGRAM ── -->
+<section id="instagram">
+  <div class="insta-header reveal">
+    <p class="section-eyebrow"><i class="fa-brands fa-instagram" style="margin-right:6px;"></i>Follow Our Journey</p>
+    <a href="https://www.instagram.com/eventsbypejublack" target="_blank" class="insta-handle">
+      <i class="fa-brands fa-instagram"></i>
+      @eventsbypejublack
+    </a>
+  </div>
+  <div class="insta-grid reveal delay-1">
+    <div class="insta-cell"><div class="insta-inner-grad"></div><i class="fa-solid fa-ring"></i></div>
+    <div class="insta-cell"><div class="insta-inner-grad"></div><i class="fa-solid fa-champagne-glasses"></i></div>
+    <div class="insta-cell"><div class="insta-inner-grad"></div><i class="fa-solid fa-cake-candles"></i></div>
+    <div class="insta-cell"><div class="insta-inner-grad"></div><i class="fa-solid fa-heart"></i></div>
+    <div class="insta-cell"><div class="insta-inner-grad"></div><i class="fa-solid fa-star"></i></div>
+    <div class="insta-cell"><div class="insta-inner-grad"></div><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo">Peju Black</a>
+      <p>Lagos-based event producer and designer crafting extraordinary celebrations — from intimate social gatherings to grand weddings and corporate productions.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/eventsbypejublack" target="_blank" class="social-btn" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        <a href="#" class="social-btn" aria-label="Twitter / X">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="#" class="social-btn" aria-label="TikTok">
+          <i class="fa-brands fa-tiktok"></i>
+        </a>
+        <a href="https://wa.me/234000000000" target="_blank" class="social-btn" aria-label="WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services"><i class="fa-solid fa-chevron-right"></i>Corporate Events</a></li>
+        <li><a href="#services"><i class="fa-solid fa-chevron-right"></i>Social Events</a></li>
+        <li><a href="#services"><i class="fa-solid fa-chevron-right"></i>Weddings</a></li>
+        <li><a href="#services"><i class="fa-solid fa-chevron-right"></i>Event Design</a></li>
+        <li><a href="#services"><i class="fa-solid fa-chevron-right"></i>Full Planning</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about"><i class="fa-solid fa-chevron-right"></i>About Us</a></li>
+        <li><a href="#gallery"><i class="fa-solid fa-chevron-right"></i>Gallery</a></li>
+        <li><a href="#testimonials"><i class="fa-solid fa-chevron-right"></i>Testimonials</a></li>
+        <li><a href="#process"><i class="fa-solid fa-chevron-right"></i>Our Process</a></li>
+        <li><a href="#contact"><i class="fa-solid fa-chevron-right"></i>Book Now</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/eventsbypejublack" target="_blank"><i class="fa-brands fa-instagram"></i>@eventsbypejublack</a></li>
+        <li><a href="mailto:bookings@eventsbypejublack.com"><i class="fa-solid fa-envelope"></i>Email Us</a></li>
+        <li><a href="#"><i class="fa-solid fa-location-dot"></i>Lagos, Nigeria</a></li>
+        <li><a href="#"><i class="fa-solid fa-clock"></i>Mon–Sat, 9AM–6PM</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Events by Peju Black. All rights reserved.</p>
+    <span>Designed with <i class="fa-solid fa-heart" style="color:var(--crimson);font-size:0.7rem;margin:0 3px;"></i> for Oyepeju Ojikutu</span>
+  </div>
+</footer>
+
+<script>
+  // ── CURSOR ──
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mx = 0, my = 0, fx = 0, fy = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+  });
+
+  const interactibles = document.querySelectorAll('a, button, .gallery-item, .service-card, .step, .testi-card');
+  interactibles.forEach(el => {
+    el.addEventListener('mouseenter', () => follower.classList.add('hover'));
+    el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
+  });
+
+  function animateFollower() {
+    fx += (mx - fx) * 0.12;
+    fy += (my - fy) * 0.12;
+    follower.style.transform = `translate(${fx - 18}px, ${fy - 18}px)`;
+    requestAnimationFrame(animateFollower);
+  }
+  animateFollower();
+
+  // ── NAV ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── HAMBURGER ──
+  const ham = document.getElementById('hamburger');
+  const mob = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => mob.classList.toggle('open'));
+  function closeMobile() { mob.classList.remove('open'); }
+
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in-view'); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(r => observer.observe(r));
+
+  // ── COUNTER ANIMATION ──
+  function animateCounter(el) {
+    const target = +el.dataset.count;
+    let count = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      count += step;
+      if (count >= target) { count = target; clearInterval(timer); }
+      el.textContent = Math.floor(count) + (el.dataset.count == 98 ? '%' : '+');
+    }, 25);
+  }
+
+  const statsObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.stat-num').forEach(animateCounter);
+        statsObs.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  const statsSection = document.getElementById('stats');
+  if (statsSection) statsObs.observe(statsSection);
+
+  // ── FORM ──
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.currentTarget;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Message Sent!';
+    btn.style.background = 'linear-gradient(135deg,#1a7a4a,#28a065)';
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  // ── TESTI DOTS (visual only on desktop) ──
+  document.querySelectorAll('.testi-dot').forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      document.querySelectorAll('.testi-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

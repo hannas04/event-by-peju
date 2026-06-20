@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Events by Pejublack</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --pink: #D4237A;
+    --gold: #F5A623;
+    --sage: #7BC8A4;
+    --charcoal: #1A1A1A;
+    --cream: #FAF8F5;
+    --white: #FFFFFF;
+    --light-gray: #F2F0ED;
+    --text-muted: #6B6B6B;
+    --border: rgba(212,35,122,0.12);
+    --font-display: 'Playfair Display', serif;
+    --font-sub: 'Cormorant Garamond', serif;
+    --font-body: 'Jost', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--cream); color: var(--charcoal); overflow-x: hidden; }
+
+  /* ── CURSOR ── */
+  .cursor { position: fixed; width: 10px; height: 10px; background: var(--pink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; mix-blend-mode: multiply; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1.5px solid var(--pink); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all .15s ease; opacity: .6; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: linear-gradient(var(--pink), var(--gold)); border-radius: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 22px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(250,248,245,.97);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 30px rgba(0,0,0,.06);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-text { font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--charcoal); font-weight: 500; letter-spacing: .02em; }
+  .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
+  .nav-links a { font-family: var(--font-body); font-weight: 300; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color .3s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--pink); transition: width .3s; }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-links a:hover, .nav-links a.active { color: var(--pink); }
+  .nav-cta { background: var(--pink); color: var(--white) !important; padding: 10px 24px; letter-spacing: .12em !important; }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--charcoal) !important; color: var(--white) !important; }
+  .nav-menu-btn { display: none; background: none; border: none; cursor: pointer; color: var(--charcoal); font-size: 1.4rem; }
+
+  /* ── MOBILE NAV ── */
+  .mobile-nav { display: none; position: fixed; inset: 0; background: var(--charcoal); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a { font-family: var(--font-display); font-style: italic; font-size: 2rem; color: rgba(255,255,255,.8); text-decoration: none; transition: color .3s; }
+  .mobile-nav a:hover { color: var(--pink); }
+  .mobile-nav-close { position: absolute; top: 28px; right: 34px; background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding-top: 160px; padding-bottom: 80px;
+    background: var(--charcoal);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 100%, rgba(212,35,122,.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 0%, rgba(245,166,35,.08) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(123,200,164,.05) 0%, transparent 60%);
+  }
+  /* Animated blob accents */
+  .page-hero-blob {
+    position: absolute; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    pointer-events: none; animation: blobFloat 10s ease-in-out infinite;
+  }
+  @keyframes blobFloat { 0%,100% { transform: scale(1) translate(0,0); } 33% { transform: scale(1.05) translate(10px,-15px); } 66% { transform: scale(.95) translate(-8px,10px); } }
+
+  .page-hero-inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 0 24px; }
+  .page-hero-eyebrow { font-family: var(--font-body); font-weight: 300; font-size: .68rem; letter-spacing: .5em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .page-hero-eyebrow::before, .page-hero-eyebrow::after { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
+  .page-hero-title { font-family: var(--font-display); font-style: italic; font-size: clamp(2.8rem, 6vw, 5rem); color: var(--white); line-height: 1.1; font-weight: 500; margin-bottom: 18px; }
+  .page-hero-title span { color: var(--gold); }
+  .page-hero-sub { font-family: var(--font-sub); font-style: italic; font-size: 1.1rem; color: rgba(255,255,255,.5); letter-spacing: .04em; margin-bottom: 50px; }
+  /* Event count pills row */
+  .event-count-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .event-pill {
+    font-family: var(--font-body); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase;
+    padding: 9px 20px; border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.55);
+    cursor: pointer; transition: all .3s; background: transparent;
+  }
+  .event-pill:hover, .event-pill.active { background: var(--pink); border-color: var(--pink); color: var(--white); }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb { background: var(--light-gray); padding: 14px 60px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .breadcrumb a { font-family: var(--font-body); font-size: .72rem; font-weight: 300; color: var(--text-muted); text-decoration: none; letter-spacing: .1em; transition: color .3s; }
+  .breadcrumb a:hover { color: var(--pink); }
+  .breadcrumb i { font-size: .6rem; color: var(--text-muted); }
+  .breadcrumb span { font-family: var(--font-body); font-size: .72rem; font-weight: 400; color: var(--pink); letter-spacing: .1em; }
+
+  /* ── SHARED SECTION ── */
+  .gallery-section { padding: 100px 0; position: relative; overflow: hidden; }
+  .gallery-section:nth-child(even) { background: var(--white); }
+  .gallery-section:nth-child(odd) { background: var(--cream); }
+  .gallery-section.dark { background: var(--charcoal); }
+
+  .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+
+  /* Section header */
+  .gs-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 56px; flex-wrap: wrap; }
+  .gs-header-left {}
+  .gs-label { font-family: var(--font-body); font-weight: 300; font-size: .68rem; letter-spacing: .5em; text-transform: uppercase; color: var(--pink); margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+  .gs-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--pink); }
+  .gs-label.gold { color: var(--gold); }
+  .gs-label.gold::before { background: var(--gold); }
+  .gs-title { font-family: var(--font-display); font-style: italic; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--charcoal); font-weight: 500; line-height: 1.15; }
+  .gs-title.white { color: var(--white); }
+  .gs-title span { color: var(--pink); }
+  .gs-title span.gold { color: var(--gold); }
+  .gs-count { font-family: var(--font-display); font-style: italic; font-size: 4rem; color: rgba(0,0,0,.04); font-weight: 700; line-height: 1; align-self: flex-start; }
+  .gs-count.white-count { color: rgba(255,255,255,.04); }
+  .gs-desc { font-family: var(--font-body); font-size: .85rem; font-weight: 300; color: var(--text-muted); line-height: 1.85; max-width: 380px; }
+  .gs-desc.light { color: rgba(255,255,255,.45); }
+  .gs-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
+  .photo-count-badge {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-body); font-size: .7rem; font-weight: 300; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-muted); padding: 10px 18px; border: 1px solid var(--border);
+  }
+  .photo-count-badge i { color: var(--pink); }
+  .photo-count-badge.light { color: rgba(255,255,255,.4); border-color: rgba(255,255,255,.1); }
+  .photo-count-badge.light i { color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--pink), transparent); opacity: .15; }
+  .section-divider.gold-div { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+  /* ═══════════════════════════
+     GALLERY LAYOUT VARIANTS
+  ═══════════════════════════ */
+
+  /* ── LAYOUT A: Hero + side stack (Event 1 - Weddings) ── */
+  .layout-a { display: grid; grid-template-columns: 1.6fr 1fr; grid-template-rows: auto auto; gap: 10px; }
+  .layout-a .img-hero { grid-row: span 2; }
+  .layout-a .img-sm {}
+
+  /* ── LAYOUT B: 3-column masonry (Event 2 - Traditional) ── */
+  .layout-b { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .layout-b .img-tall { grid-row: span 2; }
+
+  /* ── LAYOUT C: Horizontal filmstrip (Event 3 - Birthdays) ── */
+  .layout-c { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .layout-c .img-wide { grid-column: span 2; }
+
+  /* ── LAYOUT D: Feature + grid (Event 4 - Corporate) ── */
+  .layout-d { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 340px 240px; gap: 10px; }
+  .layout-d .img-feature { grid-column: span 2; grid-row: span 2; }
+
+  /* ── LAYOUT E: Scattered editorial (Event 5 - Social) ── */
+  .layout-e { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 260px 260px; gap: 10px; }
+  .layout-e .img-wide-2 { grid-column: span 2; }
+
+  /* ── LAYOUT F: Duo + strip (Event 6 - Pre-wedding) ── */
+  .layout-f { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .layout-f .img-strip { grid-column: span 2; height: 200px; }
+
+  /* ── LAYOUT G: Panoramic (Event 7 - Children's) ── */
+  .layout-g { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 280px 200px; gap: 10px; }
+  .layout-g .img-pano { grid-column: span 4; height: 240px; }
+  .layout-g .img-sq {}
+
+  /* ── SHARED IMAGE WRAPPER ── */
+  .img-wrap {
+    position: relative; overflow: hidden; cursor: pointer;
+    background: #2a1a24;
+    min-height: 240px;
+  }
+  .img-wrap img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .7s cubic-bezier(.25,.46,.45,.94), filter .5s ease;
+    filter: brightness(.95) saturate(1.05);
+  }
+  .img-wrap:hover img { transform: scale(1.06); filter: brightness(1) saturate(1.1); }
+
+  /* Overlay on hover */
+  .img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(212,35,122,.55) 0%, rgba(26,26,26,.5) 100%);
+    opacity: 0; transition: opacity .4s ease;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; z-index: 2;
+  }
+  .img-wrap:hover .img-overlay { opacity: 1; }
+  .img-overlay i { color: var(--white); font-size: 1.6rem; transform: scale(.8); transition: transform .3s ease .1s; }
+  .img-wrap:hover .img-overlay i { transform: scale(1); }
+  .img-overlay-label { font-family: var(--font-body); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+
+  /* Caption tag in corner */
+  .img-tag {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 40px 16px 14px;
+    background: linear-gradient(transparent, rgba(26,26,26,.7));
+    opacity: 0; transition: opacity .4s;
+    z-index: 2;
+  }
+  .img-wrap:hover .img-tag { opacity: 1; }
+  .img-tag span { font-family: var(--font-sub); font-style: italic; font-size: .85rem; color: rgba(255,255,255,.85); }
+
+  /* Category badge on image */
+  .img-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 3;
+    background: var(--pink); color: var(--white);
+    font-family: var(--font-body); font-size: .6rem; letter-spacing: .15em; text-transform: uppercase;
+    padding: 5px 12px;
+    opacity: 0; transform: translateY(-6px); transition: all .3s;
+  }
+  .img-wrap:hover .img-badge { opacity: 1; transform: translateY(0); }
+
+  /* Expand button */
+  .img-expand {
+    position: absolute; top: 14px; right: 14px; z-index: 3;
+    width: 34px; height: 34px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    display: flex; align-items: center; justify-content: center; color: var(--white); font-size: .75rem;
+    opacity: 0; transition: all .3s; cursor: pointer; backdrop-filter: blur(4px);
+  }
+  .img-wrap:hover .img-expand { opacity: 1; }
+  .img-expand:hover { background: var(--pink); border-color: var(--pink); }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9000;
+    background: rgba(26,26,26,.96); backdrop-filter: blur(10px);
+    align-items: center; justify-content: center; padding: 40px;
+    flex-direction: column;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-img-wrap { position: relative; max-width: 900px; max-height: 80vh; }
+  .lightbox-img-wrap img { max-width: 100%; max-height: 80vh; object-fit: contain; display: block; }
+  .lightbox-close {
+    position: absolute; top: -50px; right: 0;
+    width: 40px; height: 40px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    transition: all .3s;
+  }
+  .lightbox-close:hover { background: var(--pink); }
+  .lightbox-nav { display: flex; gap: 12px; margin-top: 20px; }
+  .lightbox-nav button {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: var(--white);
+    width: 46px; height: 46px; cursor: pointer; font-size: .9rem; transition: all .3s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox-nav button:hover { background: var(--pink); border-color: var(--pink); }
+  .lightbox-caption { font-family: var(--font-sub); font-style: italic; color: rgba(255,255,255,.5); font-size: .95rem; margin-top: 14px; letter-spacing: .04em; }
+  .lightbox-counter { font-family: var(--font-body); font-size: .68rem; letter-spacing: .2em; color: rgba(255,255,255,.3); text-transform: uppercase; margin-top: 6px; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity .85s ease, transform .85s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity .85s ease, transform .85s ease; }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+  /* ── EVENT NAV SIDEBAR (sticky) ── */
+  .event-sidebar {
+    position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
+    z-index: 100; display: flex; flex-direction: column; gap: 10px;
+  }
+  .sidebar-dot {
+    width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(212,35,122,.4);
+    cursor: pointer; transition: all .3s; position: relative;
+  }
+  .sidebar-dot.active { background: var(--pink); border-color: var(--pink); width: 10px; height: 10px; }
+  .sidebar-dot::before {
+    content: attr(data-label);
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    font-family: var(--font-body); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--pink); white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: opacity .3s; background: var(--white); padding: 4px 10px; box-shadow: 0 4px 16px rgba(0,0,0,.1);
+  }
+  .sidebar-dot:hover::before { opacity: 1; }
+
+  /* ── MARQUEE STRIP ── */
+  .marquee-strip { background: var(--charcoal); padding: 16px 0; overflow: hidden; white-space: nowrap; }
+  .marquee-track { display: inline-flex; animation: marquee 28s linear infinite; }
+  .marquee-item { font-family: var(--font-sub); font-style: italic; font-size: .95rem; color: rgba(255,255,255,.45); padding: 0 36px; display: inline-flex; align-items: center; gap: 16px; }
+  .marquee-item i { color: var(--gold); font-size: .65rem; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── BLOB BG ── */
+  .blob { position: absolute; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; pointer-events: none; opacity: .035; z-index: 0; animation: blobFloat 10s ease-in-out infinite; }
+
+  /* ── CTA BAND ── */
+  .cta-band { background: var(--pink); padding: 80px 60px; text-align: center; position: relative; overflow: hidden; }
+  .cta-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,.1) 0%, transparent 60%); }
+  .cta-band-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .cta-band h2 { font-family: var(--font-display); font-style: italic; font-size: clamp(2rem, 4vw, 3rem); color: var(--white); font-weight: 500; margin-bottom: 16px; line-height: 1.15; }
+  .cta-band p { font-family: var(--font-body); font-size: .88rem; font-weight: 300; color: rgba(255,255,255,.75); line-height: 1.85; margin-bottom: 40px; }
+  .btn-white { display: inline-block; padding: 16px 48px; background: var(--white); color: var(--pink); font-family: var(--font-body); font-size: .78rem; letter-spacing: .22em; text-transform: uppercase; text-decoration: none; font-weight: 400; transition: all .3s; }
+  .btn-white:hover { background: var(--charcoal); color: var(--white); transform: translateY(-2px); }
+  .btn-outline-white { display: inline-block; padding: 15px 48px; border: 1px solid rgba(255,255,255,.5); color: var(--white); font-family: var(--font-body); font-size: .78rem; letter-spacing: .22em; text-transform: uppercase; text-decoration: none; font-weight: 300; transition: all .3s; margin-left: 14px; }
+  .btn-outline-white:hover { background: rgba(255,255,255,.1); border-color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--charcoal); padding: 80px 0 40px; }
+  .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  .footer-brand-name { font-family: var(--font-display); font-style: italic; font-size: 1.5rem; color: var(--white); font-weight: 500; }
+  .footer-brand-sub { font-family: var(--font-body); font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-top: 4px; }
+  .footer-brand p { font-family: var(--font-body); font-size: .82rem; font-weight: 300; color: rgba(255,255,255,.38); line-height: 1.9; margin-top: 18px; max-width: 260px; }
+  .footer-col h4 { font-family: var(--font-body); font-size: .68rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: 22px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul li a { font-family: var(--font-body); font-size: .82rem; font-weight: 300; color: rgba(255,255,255,.48); text-decoration: none; transition: color .3s; display: inline-flex; align-items: center; gap: 8px; }
+  .footer-col ul li a i { font-size: .6rem; color: var(--gold); }
+  .footer-col ul li a:hover { color: var(--pink); }
+  .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.07); margin-bottom: 36px; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .footer-bottom p { font-family: var(--font-body); font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.28); }
+  .footer-bottom p span { color: var(--pink); }
+  .footer-bank { display: flex; gap: 28px; flex-wrap: wrap; }
+  .bank-item { font-family: var(--font-body); font-size: .7rem; font-weight: 300; color: rgba(255,255,255,.28); display: flex; align-items: center; gap: 8px; }
+  .bank-item i { color: var(--gold); }
+  .footer-socials { display: flex; gap: 10px; margin-top: 20px; }
+  .footer-social-btn { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.38); font-size: .8rem; text-decoration: none; transition: all .3s; }
+  .footer-social-btn:hover { background: var(--pink); border-color: var(--pink); color: var(--white); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .section-inner { padding: 0 32px; }
+    .layout-d { grid-template-columns: repeat(2,1fr); grid-template-rows: auto; }
+    .layout-d .img-feature { grid-column: span 2; }
+    .layout-g { grid-template-columns: repeat(2,1fr); }
+    .layout-g .img-pano { grid-column: span 2; }
+    .layout-c { grid-template-columns: repeat(3,1fr); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .event-sidebar { display: none; }
+    nav { padding: 16px 32px; }
+    .breadcrumb { padding: 14px 32px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 14px 22px; }
+    .nav-links { display: none; }
+    .nav-menu-btn { display: block; }
+    .breadcrumb { padding: 12px 22px; }
+    .section-inner { padding: 0 22px; }
+    .gallery-section { padding: 70px 0; }
+    .gs-header { flex-direction: column; align-items: flex-start; }
+    .gs-header-right { align-items: flex-start; }
+    .layout-a, .layout-b, .layout-c, .layout-d, .layout-e, .layout-f, .layout-g { grid-template-columns: 1fr 1fr; }
+    .layout-a .img-hero, .layout-b .img-tall, .layout-d .img-feature, .layout-e .img-wide-2, .layout-f .img-strip, .layout-g .img-pano { grid-column: span 2; }
+    .layout-c .img-wide { grid-column: span 2; }
+    .layout-b .img-tall { grid-row: span 1; }
+    .img-wrap { min-height: 180px; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .footer-bank { flex-direction: column; gap: 10px; align-items: center; }
+    .cta-band { padding: 60px 22px; }
+    .page-hero { padding-top: 130px; padding-bottom: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()"><i class="fas fa-times"></i></button>
+  <a href="eventsbydidi.html">Home</a>
+  <a href="eventsbydidi.html#about">About</a>
+  <a href="eventsbydidi.html#services">Services</a>
+  <a href="eventsbydidi.html#packages">Packages</a>
+  <a href="gallery.html" class="active">Gallery</a>
+  <a href="eventsbydidi.html#contact">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="eventsbydidi.html" class="nav-logo">
+    <svg width="42" height="46" viewBox="0 0 42 46" fill="none">
+      <ellipse cx="13" cy="26" rx="12" ry="18" fill="#D4237A" opacity=".9" transform="rotate(-20 13 26)"/>
+      <ellipse cx="23" cy="20" rx="11" ry="16" fill="#F5A623" opacity=".85" transform="rotate(10 23 20)"/>
+      <ellipse cx="31" cy="28" rx="9" ry="13" fill="#7BC8A4" opacity=".8" transform="rotate(30 31 28)"/>
+    </svg>
+    <span class="nav-logo-text">Events by Pejublack</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="eventsbydidi.html">Home</a></li>
+    <li><a href="eventsbydidi.html#about">About</a></li>
+    <li><a href="eventsbydidi.html#services">Services</a></li>
+    <li><a href="eventsbydidi.html#packages">Packages</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="eventsbydidi.html#contact" class="nav-cta">Enquire Now</a></li>
+  </ul>
+  <button class="nav-menu-btn" onclick="openMobileNav()"><i class="fas fa-bars"></i></button>
+</nav>
+
+<!-- EVENT SIDEBAR NAV -->
+<div class="event-sidebar" id="eventSidebar">
+  <div class="sidebar-dot active" data-label="Weddings" onclick="scrollToEvent('event1')"></div>
+  <div class="sidebar-dot" data-label="Traditional" onclick="scrollToEvent('event2')"></div>
+  <div class="sidebar-dot" data-label="Birthdays" onclick="scrollToEvent('event3')"></div>
+  <div class="sidebar-dot" data-label="Corporate" onclick="scrollToEvent('event4')"></div>
+  <div class="sidebar-dot" data-label="Social" onclick="scrollToEvent('event5')"></div>
+  <div class="sidebar-dot" data-label="Pre-Wedding" onclick="scrollToEvent('event6')"></div>
+  <div class="sidebar-dot" data-label="Children's" onclick="scrollToEvent('event7')"></div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-blob" style="width:380px;height:480px;top:-80px;left:-80px;background:var(--pink);opacity:.05;"></div>
+  <div class="page-hero-blob" style="width:280px;height:350px;bottom:-60px;right:-60px;background:var(--gold);opacity:.05;animation-delay:-4s;"></div>
+
+  <div class="page-hero-inner">
+    <div class="page-hero-eyebrow">Our Portfolio</div>
+    <h1 class="page-hero-title">Memories We've<br><span>Crafted</span></h1>
+    <p class="page-hero-sub">Seven event categories. Every occasion elevated to art.</p>
+    <div class="event-count-row">
+      <button class="event-pill active" onclick="scrollToEvent('event1')"><i class="fas fa-rings-wedding" style="margin-right:6px;font-size:.7rem;"></i>Weddings</button>
+      <button class="event-pill" onclick="scrollToEvent('event2')"><i class="fas fa-drum" style="margin-right:6px;font-size:.7rem;"></i>Traditional</button>
+      <button class="event-pill" onclick="scrollToEvent('event3')"><i class="fas fa-birthday-cake" style="margin-right:6px;font-size:.7rem;"></i>Birthdays</button>
+      <button class="event-pill" onclick="scrollToEvent('event4')"><i class="fas fa-briefcase" style="margin-right:6px;font-size:.7rem;"></i>Corporate</button>
+      <button class="event-pill" onclick="scrollToEvent('event5')"><i class="fas fa-glass-cheers" style="margin-right:6px;font-size:.7rem;"></i>Social</button>
+      <button class="event-pill" onclick="scrollToEvent('event6')"><i class="fas fa-heart" style="margin-right:6px;font-size:.7rem;"></i>Pre-Wedding</button>
+      <button class="event-pill" onclick="scrollToEvent('event7')"><i class="fas fa-child" style="margin-right:6px;font-size:.7rem;"></i>Children's</button>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="eventsbydidi.html"><i class="fas fa-home"></i> &nbsp;Home</a>
+  <i class="fas fa-chevron-right"></i>
+  <span>Gallery</span>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">Weddings <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Traditional Ceremonies <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Birthday Celebrations <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Corporate Events <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Social Gatherings <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Pre-Wedding Shoots <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Children's Parties <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Weddings <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Traditional Ceremonies <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Birthday Celebrations <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Corporate Events <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Social Gatherings <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Pre-Wedding Shoots <i class="fas fa-circle"></i></span>
+    <span class="marquee-item">Children's Parties <i class="fas fa-circle"></i></span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     EVENT 1 — WHITE WEDDINGS
+════════════════════════════════════════ -->
+<section class="gallery-section" id="event1">
+  <div class="blob" style="width:450px;height:450px;top:-60px;right:-100px;background:var(--pink);"></div>
+  <div class="section-inner">
+    <div class="gs-header reveal">
+      <div class="gs-header-left">
+        <div class="gs-label">Event 01</div>
+        <h2 class="gs-title">White <span>Weddings</span></h2>
+        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:var(--text-muted);margin-top:8px;font-weight:300;">Where love becomes a timeless ceremony</p>
+      </div>
+      <div class="gs-header-right">
+        <div class="gs-count">01</div>
+        <div class="photo-count-badge"><i class="fas fa-images"></i> 6 Photographs</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT A: Big hero + side stack -->
+    <div class="layout-a reveal">
+      <div class="img-wrap img-hero" style="min-height:500px;" onclick="openLightbox('wedding', 0)">
+        <img src="wedding_01.jpg" alt="Wedding ceremony aisle decoration Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i><span class="img-overlay-label">View Full</span></div>
+        <div class="img-badge">White Wedding</div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Ceremony — The Grand Entrance</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('wedding', 1)">
+        <img src="wedding_02.jpg" alt="Bride portrait white gown Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Bridal Portrait</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('wedding', 2)">
+        <img src="wedding_03.jpg" alt="Wedding reception table decor">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Reception Décor</span></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;" class="reveal">
+      <div class="img-wrap" onclick="openLightbox('wedding', 3)">
+        <img src="wedding_04.jpg" alt="Couple first dance wedding">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>First Dance</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('wedding', 4)">
+        <img src="wedding_05.jpg" alt="Wedding cake cutting ceremony">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Cake Cutting</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('wedding', 5)">
+        <img src="wedding_06.jpg" alt="Bridal party bridesmaids photo">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Bridal Party</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════
+     EVENT 2 — TRADITIONAL WEDDINGS
+════════════════════════════════════════ -->
+<section class="gallery-section dark" id="event2">
+  <div class="blob" style="width:380px;height:380px;bottom:-80px;left:-80px;background:var(--gold);opacity:.04;"></div>
+  <div class="section-inner">
+    <div class="gs-header reveal">
+      <div class="gs-header-left">
+        <div class="gs-label gold">Event 02</div>
+        <h2 class="gs-title white">Traditional <span class="gold">Ceremonies</span></h2>
+        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:rgba(255,255,255,.45);margin-top:8px;font-weight:300;">Culture, colour & celebration in full bloom</p>
+      </div>
+      <div class="gs-header-right">
+        <div class="gs-count white-count">02</div>
+        <div class="photo-count-badge light"><i class="fas fa-images"></i> 6 Photographs</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT B: 3-col masonry -->
+    <div class="layout-b reveal">
+      <div class="img-wrap img-tall" style="min-height:500px;" onclick="openLightbox('traditional', 0)">
+        <img src="traditional_01.jpg" alt="Nigerian bride traditional attire coral beads">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-badge">Traditional</div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>The Bride — Regal & Radiant</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('traditional', 1)">
+        <img src="traditional_02.jpg" alt="Traditional wedding dance ceremony">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Cultural Dance</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('traditional', 2)">
+        <img src="traditional_03.jpg" alt="Groom traditional agbada outfit">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>The Groom's Entrance</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('traditional', 3)">
+        <img src="traditional_04.jpg" alt="Palm wine carrying bride family">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Palm Wine Ceremony</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('traditional', 4)">
+        <img src="traditional_05.jpg" alt="Traditional wedding decor setup">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Venue Décor</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('traditional', 5)">
+        <img src="traditional_06.jpg" alt="Couple together traditional attire">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Together Forever</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider gold-div"></div>
+
+<!-- ═══════════════════════════════════════
+     EVENT 3 — BIRTHDAY CELEBRATIONS
+════════════════════════════════════════ -->
+<section class="gallery-section" id="event3">
+  <div class="blob" style="width:320px;height:320px;top:80px;right:-60px;background:var(--sage);"></div>
+  <div class="section-inner">
+    <div class="gs-header reveal">
+      <div class="gs-header-left">
+        <div class="gs-label">Event 03</div>
+        <h2 class="gs-title">Birthday <span>Celebrations</span></h2>
+        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:var(--text-muted);margin-top:8px;font-weight:300;">Every milestone deserves a spectacular moment</p>
+      </div>
+      <div class="gs-header-right">
+        <div class="gs-count">03</div>
+        <div class="photo-count-badge"><i class="fas fa-images"></i> 6 Photographs</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT E: Feature left + grid right -->
+    <div class="layout-e reveal">
+      <div class="img-wrap img-wide-2" style="min-height:300px;" onclick="openLightbox('birthday', 0)">
+        <img src="birthday_01.jpg" alt="Birthday celebration balloon décor Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-badge">Birthday</div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Grand Balloon Installation</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('birthday', 1)">
+        <img src="birthday_02.jpg" alt="Birthday celebrant photo shoot">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Celebrant Portrait</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('birthday', 2)">
+        <img src="birthday_03.jpg" alt="Birthday cake design luxury">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>The Statement Cake</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('birthday', 3)">
+        <img src="birthday_04.jpg" alt="Birthday party venue setup">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Venue Transformation</span></div>
+      </div>
+      <div class="img-wrap img-wide-2" onclick="openLightbox('birthday', 4)">
+        <img src="birthday_05.jpg" alt="Birthday guests dancing party">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>The Celebration</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('birthday', 5)">
+        <img src="birthday_06.jpg" alt="Birthday photo booth setup">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Photo Moments</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════
+     EVENT 4 — CORPORATE EVENTS
+════════════════════════════════════════ -->
+<section class="gallery-section" style="background:var(--charcoal);" id="event4">
+  <div class="section-inner">
+    <div class="gs-header reveal">
+      <div class="gs-header-left">
+        <div class="gs-label gold">Event 04</div>
+        <h2 class="gs-title white">Corporate <span class="gold">Events</span></h2>
+        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:rgba(255,255,255,.45);margin-top:8px;font-weight:300;">Professional productions that elevate your brand</p>
+      </div>
+      <div class="gs-header-right">
+        <div class="gs-count white-count">04</div>
+        <div class="photo-count-badge light"><i class="fas fa-images"></i> 6 Photographs</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT D: Feature + 4 grid -->
+    <div class="layout-d reveal">
+      <div class="img-wrap img-feature" onclick="openLightbox('corporate', 0)">
+        <img src="corporate_01.jpg" alt="Corporate event gala Lagos venue">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-badge">Corporate</div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Gala Night — Main Stage</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('corporate', 1)">
+        <img src="corporate_02.jpg" alt="Corporate dinner table setting">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Dinner Table Setting</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('corporate', 2)">
+        <img src="corporate_03.jpg" alt="Product launch event decoration">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Product Launch</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('corporate', 3)">
+        <img src="corporate_04.jpg" alt="Corporate award ceremony stage">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Awards Night</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('corporate', 4)">
+        <img src="corporate_05.jpg" alt="Conference event setup branding">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Conference Setup</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('corporate', 5)">
+        <img src="corporate_06.jpg" alt="Networking cocktail event Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Cocktail Networking</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider gold-div"></div>
+
+<!-- ═══════════════════════════════════════
+     EVENT 5 — SOCIAL GATHERINGS
+════════════════════════════════════════ -->
+<section class="gallery-section" style="background:var(--white);" id="event5">
+  <div class="blob" style="width:360px;height:360px;bottom:-40px;right:-80px;background:var(--pink);"></div>
+  <div class="section-inner">
+    <div class="gs-header reveal">
+      <div class="gs-header-left">
+        <div class="gs-label">Event 05</div>
+        <h2 class="gs-title">Social <span>Gatherings</span></h2>
+        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:var(--text-muted);margin-top:8px;font-weight:300;">Life's beautiful moments, shared with those who matter</p>
+      </div>
+      <div class="gs-header-right">
+        <div class="gs-count">05</div>
+        <div class="photo-count-badge"><i class="fas fa-images"></i> 6 Photographs</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT C: Horizontal strip -->
+    <div class="layout-c reveal">
+      <div class="img-wrap img-wide" style="min-height:320px;" onclick="openLightbox('social', 0)">
+        <img src="social_01.jpg" alt="Social gathering event decoration Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-badge">Social</div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>The Perfect Setting</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('social', 1)">
+        <img src="social_02.jpg" alt="Guests enjoying social event">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Joyful Moments</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('social', 2)">
+        <img src="social_03.jpg" alt="Social event catering food display">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Catering Display</span></div>
+      </div>
+      <div class="img-wrap img-wide" onclick="openLightbox('social', 3)">
+        <img src="social_04.jpg" alt="Social gathering outdoor event">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Outdoor Elegance</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('social', 4)">
+        <img src="social_05.jpg" alt="Social event lighting atmosphere">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Ambient Lighting</span></div>
+      </div>
+      <div class="img-wrap" onclick="openLightbox('social', 5)">
+        <img src="social_06.jpg" alt="Group photo social event Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Together We Celebrate</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════
+     EVENT 6 — PRE-WEDDING SHOOTS
+════════════════════════════════════════ -->
+<section class="gallery-section" style="background:var(--cream);" id="event6">
+  <div class="blob" style="width:300px;height:300px;top:60px;left:-60px;background:var(--sage);"></div>
+  <div class="section-inner">
+    <div class="gs-header reveal">
+      <div class="gs-header-left">
+        <div class="gs-label">Event 06</div>
+        <h2 class="gs-title">Pre-Wedding <span>Shoots</span></h2>
+        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:var(--text-muted);margin-top:8px;font-weight:300;">Capturing love stories before the big day</p>
+      </div>
+      <div class="gs-header-right">
+        <div class="gs-count">06</div>
+        <div class="photo-count-badge"><i class="fas fa-images"></i> 6 Photographs</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT F: Duo portraits + wide strip -->
+    <div class="layout-f reveal">
+      <div class="img-wrap" style="min-height:420px;" onclick="openLightbox('prewedding', 0)">
+        <img src="prewedding_01.jpg" alt="Pre-wedding couple photo shoot Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-badge">Pre-Wedding</div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Love in Frame</span></div>
+      </div>
+      <div class="img-wrap" style="min-height:420px;" onclick="openLightbox('prewedding', 1)">
+        <img src="prewedding_02.jpg" alt="Pre-wedding shoot outdoor Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Golden Hour</span></div>
+      </div>
+      <div class="img-wrap img-strip" onclick="openLightbox('prewedding', 2)">
+        <img src="prewedding_03.jpg" alt="Pre-wedding intimate couple moment">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>An Intimate Moment</span></div>
+      </div>
+      <div class="img-wrap" style="min-height:360px;" onclick="openLightbox('prewedding', 3)">
+        <img src="prewedding_04.jpg" alt="Couple styled pre-wedding photo">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Styled & Sublime</span></div>
+      </div>
+      <div class="img-wrap" style="min-height:360px;" onclick="openLightbox('prewedding', 4)">
+        <img src="prewedding_05.jpg" alt="Pre-wedding fashion shoot Nigeria">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Effortless Elegance</span></div>
+      </div>
+      <div class="img-wrap img-strip" onclick="openLightbox('prewedding', 5)">
+        <img src="prewedding_06.jpg" alt="Couple laughing together pre-wedding">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Pure Joy</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════
+     EVENT 7 — CHILDREN'S PARTIES
+════════════════════════════════════════ -->
+<section class="gallery-section" style="background:var(--charcoal);" id="event7">
+  <div class="blob" style="width:420px;height:420px;bottom:-80px;right:-80px;background:var(--gold);opacity:.04;"></div>
+  <div class="section-inner">
+    <div class="gs-header reveal">
+      <div class="gs-header-left">
+        <div class="gs-label gold">Event 07</div>
+        <h2 class="gs-title white">Children's <span class="gold">Parties</span></h2>
+        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:rgba(255,255,255,.45);margin-top:8px;font-weight:300;">Where imagination runs wild and magic comes alive</p>
+      </div>
+      <div class="gs-header-right">
+        <div class="gs-count white-count">07</div>
+        <div class="photo-count-badge light"><i class="fas fa-images"></i> 6 Photographs</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT G: Panoramic + 4 squares -->
+    <div class="layout-g reveal">
+      <div class="img-wrap img-pano" onclick="openLightbox('childrens', 0)">
+        <img src="childrens_01.jpg" alt="Children's party themed setup Lagos">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-badge">Children's Party</div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>The Spectacular Theme Setup</span></div>
+      </div>
+      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 1)">
+        <img src="childrens_02.jpg" alt="Birthday child superhero costume party">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Little Superhero</span></div>
+      </div>
+      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 2)">
+        <img src="childrens_03.jpg" alt="Children party balloon decorations">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Balloon Wonderland</span></div>
+      </div>
+      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 3)">
+        <img src="childrens_04.jpg" alt="Children's birthday cake themed">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>The Birthday Cake</span></div>
+      </div>
+      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 4)">
+        <img src="childrens_05.jpg" alt="Kids enjoying party activities">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Pure Childhood Joy</span></div>
+      </div>
+      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 5)">
+        <img src="childrens_06.jpg" alt="Family photo children's party">
+        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
+        <div class="img-expand"><i class="fas fa-expand"></i></div>
+        <div class="img-tag"><span>Family Memories</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+  <div class="lightbox-img-wrap">
+    <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+    <img src="" alt="" id="lightboxImg">
+  </div>
+  <div class="lightbox-nav">
+    <button onclick="lbPrev()"><i class="fas fa-chevron-left"></i></button>
+    <button onclick="lbNext()"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="lightbox-caption" id="lbCaption"></div>
+  <div class="lightbox-counter" id="lbCounter"></div>
+</div>
+
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-band-inner reveal">
+    <h2>Ready to Create<br><em>Your</em> Story?</h2>
+    <p>Every event in this gallery began with a conversation. Let's have ours and turn your vision into an unforgettable memory that lasts a lifetime.</p>
+    <a href="eventsbydidi.html#contact" class="btn-white">Start Planning Today</a>
+    <a href="eventsbydidi.html#packages" class="btn-outline-white">View Packages</a>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:6px;">
+          <svg width="44" height="50" viewBox="0 0 44 50" fill="none">
+            <ellipse cx="14" cy="28" rx="13" ry="19" fill="#D4237A" opacity=".85" transform="rotate(-20 14 28)"/>
+            <ellipse cx="24" cy="22" rx="12" ry="17" fill="#F5A623" opacity=".8" transform="rotate(10 24 22)"/>
+            <ellipse cx="33" cy="30" rx="10" ry="14" fill="#7BC8A4" opacity=".75" transform="rotate(30 33 30)"/>
+          </svg>
+          <div>
+            <div class="footer-brand-name">Events by Pejublack</div>
+            <div class="footer-brand-sub">Creating Exciting Memories</div>
+          </div>
+        </div>
+        <p>Lagos' premier full-service event planning, design, and management company. From intimate gatherings to grand celebrations — we make every occasion unforgettable.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-social-btn"><i class="fab fa-tiktok"></i></a>
+          <a href="#" class="footer-social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/2348134125119" class="footer-social-btn"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Gallery</h4>
+        <ul>
+          <li><a href="#event1"><i class="fas fa-chevron-right"></i>White Weddings</a></li>
+          <li><a href="#event2"><i class="fas fa-chevron-right"></i>Traditional Weddings</a></li>
+          <li><a href="#event3"><i class="fas fa-chevron-right"></i>Birthday Celebrations</a></li>
+          <li><a href="#event4"><i class="fas fa-chevron-right"></i>Corporate Events</a></li>
+          <li><a href="#event5"><i class="fas fa-chevron-right"></i>Social Gatherings</a></li>
+          <li><a href="#event6"><i class="fas fa-chevron-right"></i>Pre-Wedding Shoots</a></li>
+          <li><a href="#event7"><i class="fas fa-chevron-right"></i>Children's Parties</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="eventsbydidi.html#packages"><i class="fas fa-chevron-right"></i>Full Event Planning</a></li>
+          <li><a href="eventsbydidi.html#packages"><i class="fas fa-chevron-right"></i>Part Planning</a></li>
+          <li><a href="eventsbydidi.html#packages"><i class="fas fa-chevron-right"></i>Co-ordination Only</a></li>
+          <li><a href="eventsbydidi.html#services"><i class="fas fa-chevron-right"></i>Vendor Management</a></li>
+          <li><a href="eventsbydidi.html#services"><i class="fas fa-chevron-right"></i>Event Design</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <ul>
+          <li><a href="tel:+2348134125119"><i class="fas fa-phone"></i>+234 813 412 5119</a></li>
+          <li><a href="tel:+2348021323933"><i class="fas fa-phone"></i>+234 802 132 3933</a></li>
+          <li><a href="mailto:eventsbypejublack@gmail.com"><i class="fas fa-envelope"></i>eventsbypejublack<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@gmail.com</a></li>
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i>Lagos, Nigeria</a></li>
+        </ul>
+        <div style="margin-top:22px;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);">
+          <h4>Payment</h4>
+          <p style="font-family:var(--font-body);font-size:.75rem;font-weight:300;color:rgba(255,255,255,.3);line-height:1.85;margin-top:10px;">
+            Wema Bank: <span style="color:rgba(255,255,255,.5);">0126376120</span><br>
+            Stanbic IBTC: <span style="color:rgba(255,255,255,.5);">0079886960</span><br>
+            <span style="color:rgba(255,255,255,.2);">Acc: EventsByPejublack</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p>&copy; 2026 Events by Pejublack. All rights reserved. Made with <span>♥</span> in Lagos, Nigeria.</p>
+      <div class="footer-bank">
+        <div class="bank-item"><i class="fas fa-university"></i>Wema: 0126376120</div>
+        <div class="bank-item"><i class="fas fa-university"></i>Stanbic: 0079886960</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX=0,mouseY=0,ringX=0,ringY=0;
+document.addEventListener('mousemove',e=>{ mouseX=e.clientX;mouseY=e.clientY; cursor.style.left=mouseX+'px'; cursor.style.top=mouseY+'px'; });
+(function animRing(){ ringX+=(mouseX-ringX)*.12; ringY+=(mouseY-ringY)*.12; cursorRing.style.left=ringX+'px'; cursorRing.style.top=ringY+'px'; requestAnimationFrame(animRing); })();
+document.querySelectorAll('a,button,.img-wrap,.event-pill').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cursor.style.width='18px';cursor.style.height='18px';cursor.style.background='var(--gold)'; cursorRing.style.width='52px';cursorRing.style.height='52px'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.width='10px';cursor.style.height='10px';cursor.style.background='var(--pink)'; cursorRing.style.width='36px';cursorRing.style.height='36px'; });
+});
+
+// ── MOBILE NAV ──
+function openMobileNav(){ document.getElementById('mobileNav').classList.add('open'); }
+function closeMobileNav(){ document.getElementById('mobileNav').classList.remove('open'); }
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal,.reveal-left');
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),80); });
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el=>observer.observe(el));
+
+// ── SIDEBAR DOT ACTIVE STATE ──
+const sections = ['event1','event2','event3','event4','event5','event6','event7'];
+const sidebarDots = document.querySelectorAll('.sidebar-dot');
+const pillBtns = document.querySelectorAll('.event-pill');
+
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el && el.getBoundingClientRect().top < window.innerHeight*.5) current=id;
+  });
+  sidebarDots.forEach((dot,i)=>{
+    dot.classList.toggle('active', sections[i]===current);
+  });
+  pillBtns.forEach((btn,i)=>{
+    btn.classList.toggle('active', sections[i]===current);
+  });
+});
+
+// ── SCROLL TO EVENT ──
+function scrollToEvent(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── LIGHTBOX ──
+const galleryData = {
+  wedding:     ['wedding_01.jpg','wedding_02.jpg','wedding_03.jpg','wedding_04.jpg','wedding_05.jpg','wedding_06.jpg'],
+  traditional: ['traditional_01.jpg','traditional_02.jpg','traditional_03.jpg','traditional_04.jpg','traditional_05.jpg','traditional_06.jpg'],
+  birthday:    ['birthday_01.jpg','birthday_02.jpg','birthday_03.jpg','birthday_04.jpg','birthday_05.jpg','birthday_06.jpg'],
+  corporate:   ['corporate_01.jpg','corporate_02.jpg','corporate_03.jpg','corporate_04.jpg','corporate_05.jpg','corporate_06.jpg'],
+  social:      ['social_01.jpg','social_02.jpg','social_03.jpg','social_04.jpg','social_05.jpg','social_06.jpg'],
+  prewedding:  ['prewedding_01.jpg','prewedding_02.jpg','prewedding_03.jpg','prewedding_04.jpg','prewedding_05.jpg','prewedding_06.jpg'],
+  childrens:   ['childrens_01.jpg','childrens_02.jpg','childrens_03.jpg','childrens_04.jpg','childrens_05.jpg','childrens_06.jpg'],
+};
+
+const captions = {
+  wedding:     ['Grand Ceremony','Bridal Portrait','Reception Décor','First Dance','Cake Cutting','Bridal Party'],
+  traditional: ['The Bride','Cultural Dance','Groom\'s Entrance','Palm Wine Ceremony','Venue Décor','Together Forever'],
+  birthday:    ['Balloon Installation','Celebrant Portrait','Statement Cake','Venue Transformation','The Celebration','Photo Moments'],
+  corporate:   ['Gala Night','Dinner Setting','Product Launch','Awards Night','Conference Setup','Cocktail Networking'],
+  social:      ['Perfect Setting','Joyful Moments','Catering Display','Outdoor Elegance','Ambient Lighting','Together We Celebrate'],
+  prewedding:  ['Love in Frame','Golden Hour','An Intimate Moment','Styled & Sublime','Effortless Elegance','Pure Joy'],
+  childrens:   ['Theme Setup','Little Superhero','Balloon Wonderland','Birthday Cake','Pure Joy','Family Memories'],
+};
+
+let lbCategory='', lbIndex=0;
+
+function openLightbox(cat, idx){
+  lbCategory=cat; lbIndex=idx;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function updateLightbox(){
+  const imgs=galleryData[lbCategory];
+  const caps=captions[lbCategory];
+  document.getElementById('lightboxImg').src=imgs[lbIndex];
+  document.getElementById('lightboxImg').alt=caps[lbIndex];
+  document.getElementById('lbCaption').textContent=caps[lbIndex];
+  document.getElementById('lbCounter').textContent=(lbIndex+1)+' of '+imgs.length;
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function closeLightboxOnBg(e){ if(e.target===document.getElementById('lightbox')) closeLightbox(); }
+
+function lbNext(){
+  lbIndex=(lbIndex+1)%galleryData[lbCategory].length;
+  updateLightbox();
+}
+
+function lbPrev(){
+  lbIndex=(lbIndex-1+galleryData[lbCategory].length)%galleryData[lbCategory].length;
+  updateLightbox();
+}
+
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lightbox').classList.contains('open')){
+    if(e.key==='ArrowRight') lbNext();
+    if(e.key==='ArrowLeft') lbPrev();
+    if(e.key==='Escape') closeLightbox();
+  }
+});
+
+// ── REDUCED MOTION ──
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('.marquee-track').forEach(el=>el.style.animation='none');
+}
+</script>
+</body>
+</html>

@@ -1084,33 +1084,196 @@ function updateBudget(val){
   document.getElementById('budgetDisplay').textContent=display;
 }
 
-// ── FORM SUBMIT ──
-function submitForm(){
-  const btn=document.getElementById('submitBtn');
-  const sp=btn.querySelector('span');
-  // simple validation
-  const req=['fname','lname','email','phone','eventType','package'];
-  let valid=true;
-  req.forEach(id=>{
-    const el=document.getElementById(id);
-    if(!el.value.trim()){el.style.borderColor='#e54';valid=false;}
-    else el.style.borderColor='';
+// ════════════════════════════════════════════════════════════════
+// UPDATED FORM SUBMISSION FUNCTION
+// Replace the existing submitForm() function in your HTML with this
+// ════════════════════════════════════════════════════════════════
+
+// ⚠️ IMPORTANT: Change this URL to match your backend server address
+// Local development: http://localhost:5000
+// Production: https://your-backend-domain.com
+const BACKEND_URL = 'http://localhost:5000'; // <-- Update this to your backend URL
+
+async function submitForm() {
+  const btn = document.getElementById('submitBtn');
+  const sp = btn.querySelector('span');
+  
+  // ── STEP 1: VALIDATE REQUIRED FIELDS ──
+  const requiredFields = ['fname', 'lname', 'email', 'phone', 'eventType', 'package'];
+  let isValid = true;
+  
+  requiredFields.forEach(fieldId => {
+    const element = document.getElementById(fieldId);
+    if (!element.value.trim()) {
+      element.style.borderColor = '#e54';
+      isValid = false;
+    } else {
+      element.style.borderColor = '';
+    }
   });
-  if(!valid){sp.innerHTML='<i class="fas fa-exclamation-triangle"></i> Please fill required fields';setTimeout(()=>{sp.innerHTML='<i class="fas fa-paper-plane"></i> Send My Enquiry';},3000);return;}
+  
+  if (!isValid) {
+    sp.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Please fill required fields';
+    setTimeout(() => {
+      sp.innerHTML = '<i class="fas fa-paper-plane"></i> Send My Enquiry';
+    }, 3000);
+    return;
+  }
 
-  sp.innerHTML='<i class="fas fa-circle-notch fa-spin"></i> Sending your enquiry…';
-  btn.disabled=true;
+  // ── STEP 2: COLLECT ALL FORM DATA ──
+  
+  // Get basic information
+  const firstName = document.getElementById('fname').value.trim();
+  const lastName = document.getElementById('lname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const eventType = document.getElementById('eventType').value;
+  const package_selected = document.getElementById('package').value;
+  
+  // Get optional fields
+  const eventDate = document.getElementById('eventDate').value || '';
+  const guests = document.getElementById('guests').value || '';
+  const budget = document.getElementById('budgetDisplay').textContent || '';
+  const message = document.getElementById('message').value.trim() || '';
+  
+  // Get selected services (checkboxes)
+  const services = [];
+  document.querySelectorAll('.check-item input[type="checkbox"]:checked').forEach(checkbox => {
+    const label = checkbox.closest('.check-item').querySelector('.check-label');
+    if (label) {
+      services.push(label.textContent.trim());
+    }
+  });
 
-  setTimeout(()=>{
-    sp.innerHTML='<i class="fas fa-check-circle"></i> Enquiry Sent — We\'ll be in touch within 24 hours!';
-    btn.style.background='var(--sage)';
-    btn.style.color='var(--charcoal)';
-    setTimeout(()=>{
-      sp.innerHTML='<i class="fas fa-paper-plane"></i> Send My Enquiry';
-      btn.style.background='';btn.style.color='';btn.disabled=false;
-    },5000);
-  },2000);
+  // ── STEP 3: CREATE DATA OBJECT ──
+  const formData = {
+    fname: firstName,
+    lname: lastName,
+    email: email,
+    phone: phone,
+    eventType: eventType,
+    package: package_selected,
+    eventDate: eventDate,
+    guests: guests,
+    budget: budget,
+    services: services,
+    message: message
+  };
+
+  console.log('📤 Sending form data:', formData); // For debugging
+
+  // ── STEP 4: SHOW LOADING STATE ──
+  sp.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending your enquiry…';
+  btn.disabled = true;
+
+  try {
+    // ── STEP 5: SEND DATA TO BACKEND ──
+    const response = await fetch(`http://localhost:5000/submit-enquiry`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    // ── STEP 6: HANDLE RESPONSE ──
+    const result = await response.json();
+    
+    if (response.ok && result.success) {
+      // ✅ SUCCESS
+      sp.innerHTML = '<i class="fas fa-check-circle"></i> Enquiry Sent — We\'ll be in touch within 24 hours!';
+      btn.style.background = 'var(--sage)';
+      btn.style.color = 'var(--charcoal)';
+      
+      // Reset form
+      setTimeout(() => {
+        document.querySelector('form') ? document.querySelector('form').reset() : 
+        document.querySelectorAll('input, textarea, select').forEach(el => {
+          if (el.type === 'checkbox' || el.type === 'radio') {
+            el.checked = el.hasAttribute('checked');
+          } else {
+            el.value = '';
+          }
+        });
+        
+        // Reset button
+        sp.innerHTML = '<i class="fas fa-paper-plane"></i> Send My Enquiry';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 5000);
+    } else {
+      // ❌ ERROR FROM BACKEND
+      sp.innerHTML = '<i class="fas fa-times-circle"></i> ' + (result.message || 'Error sending enquiry');
+      btn.style.background = '#e54';
+      setTimeout(() => {
+        sp.innerHTML = '<i class="fas fa-paper-plane"></i> Send My Enquiry';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 4000);
+    }
+  } catch (error) {
+    // ❌ NETWORK ERROR
+    console.error('❌ Network error:', error);
+    sp.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Network error — check your backend is running';
+    btn.style.background = '#e54';
+    setTimeout(() => {
+      sp.innerHTML = '<i class="fas fa-paper-plane"></i> Send My Enquiry';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 4000);
+  }
 }
+
+// ════════════════════════════════════════════════════════════════
+// ADDITIONAL: Keep your existing functions
+// ════════════════════════════════════════════════════════════════
+
+// Keep the budget update function
+function updateBudget(val) {
+  const n = parseInt(val);
+  let display;
+  if (n >= 10000000) display = '₦ 10,000,000+';
+  else if (n >= 1000000) display = '₦ ' + (n / 1000000).toFixed(1).replace('.0', '') + 'M';
+  else display = '₦ ' + (n / 1000).toFixed(0) + 'k';
+  document.getElementById('budgetDisplay').textContent = display;
+}
+
+// Keep the FAQ toggle function
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── FORM SUBMIT ──
+// function submitForm(){
+//   const btn=document.getElementById('submitBtn');
+//   const sp=btn.querySelector('span');
+//   // simple validation
+//   const req=['fname','lname','email','phone','eventType','package'];
+//   let valid=true;
+//   req.forEach(id=>{
+//     const el=document.getElementById(id);
+//     if(!el.value.trim()){el.style.borderColor='#e54';valid=false;}
+//     else el.style.borderColor='';
+//   });
+//   if(!valid){sp.innerHTML='<i class="fas fa-exclamation-triangle"></i> Please fill required fields';setTimeout(()=>{sp.innerHTML='<i class="fas fa-paper-plane"></i> Send My Enquiry';},3000);return;}
+
+//   sp.innerHTML='<i class="fas fa-circle-notch fa-spin"></i> Sending your enquiry…';
+//   btn.disabled=true;
+
+//   setTimeout(()=>{
+//     sp.innerHTML='<i class="fas fa-check-circle"></i> Enquiry Sent — We\'ll be in touch within 24 hours!';
+//     btn.style.background='var(--sage)';
+//     btn.style.color='var(--charcoal)';
+//     setTimeout(()=>{
+//       sp.innerHTML='<i class="fas fa-paper-plane"></i> Send My Enquiry';
+//       btn.style.background='';btn.style.color='';btn.disabled=false;
+//     },5000);
+//   },2000);
+// }
 
 // ── FAQ ACCORDION ──
 function toggleFaq(el){

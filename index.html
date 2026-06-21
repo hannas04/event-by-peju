@@ -105,7 +105,7 @@
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: 0;
   }
-  .hero-slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26, 26, 26, 0.856) 0%, rgba(26, 26, 26, 0.877) 60%, rgba(51, 4, 27, 0.12) 100%); z-index: 1; }
+  .hero-slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26, 26, 26, 0.705) 0%, rgba(26, 26, 26, 0.719) 60%, rgba(51, 4, 27, 0.733) 100%); z-index: 1; }
   /* Slide backgrounds — now using img tags for proper image rendering */
 
   /* Animated pattern overlay */
@@ -300,6 +300,12 @@
     position: relative; overflow: hidden; cursor: pointer;
     background: linear-gradient(135deg, #2d1520, #5c2a40);
   }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
   .gallery-item:nth-child(1), .gallery-item:nth-child(5) { grid-column: span 2; grid-row: span 2; }
   .gallery-item::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(212,35,122,.3) 0%, rgba(26,26,26,.6) 100%); opacity: 0; transition: opacity .4s; z-index: 1; }
   .gallery-item:hover::before { opacity: 1; }
@@ -319,6 +325,11 @@
 
   /* decorative pattern inside gallery items */
   .gallery-item::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(255,255,255,.06) 0%, transparent 70%); }
+  .gallery-cta { margin-top: 24px; }
+  .gallery-cta .btn-primary { padding: 14px 34px; }
+  .whatsapp-float { position: fixed; right: 24px; bottom: 24px; width: 56px; height: 56px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 40px rgba(0,0,0,.18); z-index: 9999; transition: transform .2s ease, box-shadow .2s ease; }
+  .whatsapp-float:hover { transform: translateY(-3px); box-shadow: 0 22px 50px rgba(0,0,0,.22); }
+  .whatsapp-float a { color: #fff; font-size: 1.35rem; line-height: 1; }
 
   /* ─── LEAD ─── */
   #lead { padding: 120px 0; background: var(--white); }
@@ -341,6 +352,23 @@
   .lead-content .section-title { margin-bottom: 20px; }
   .lead-name { font-family: var(--font-display); font-style: italic; font-size: 1.1rem; color: var(--pink); margin-bottom: 4px; }
   .lead-role { font-family: var(--font-body); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 30px; }
+
+  /* ─── CEO SECTION ─── */
+  #ceo { padding: 120px 0; background: var(--white); }
+  .ceo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .ceo-img-frame { position: relative; overflow: hidden; border-radius: 24px; min-height: 520px; background: linear-gradient(135deg, #2d1520 0%, #5c2a40 50%, #8b4060 100%); }
+  .ceo-img-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ceo-quote { margin-top: 30px; padding: 28px 30px; background: var(--light-gray); border-left: 4px solid var(--sage); }
+  .ceo-quote p { font-family: var(--font-sub); font-style: italic; font-size: 1rem; color: var(--charcoal); line-height: 1.8; }
+  .ceo-quote span { display: block; margin-top: 18px; font-family: var(--font-body); font-size: .82rem; font-weight: 500; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; }
+  .ceo-content .section-title { margin-bottom: 24px; }
+  .ceo-bio { font-family: var(--font-body); font-size: .95rem; line-height: 1.9; color: var(--text-muted); font-weight: 300; margin-bottom: 36px; }
+  .ceo-highlights { display: grid; gap: 20px; }
+  .highlight-card { background: var(--light-gray); padding: 28px 30px; border-radius: 20px; border: 1px solid var(--border); }
+  .highlight-card h3 { font-family: var(--font-display); font-style: italic; font-size: 1.2rem; color: var(--charcoal); margin-bottom: 16px; font-weight: 500; }
+  .highlight-card p, .highlight-card ul { font-family: var(--font-body); font-size: .88rem; font-weight: 300; color: var(--text-muted); line-height: 1.8; }
+  .highlight-card ul { list-style: disc; padding-left: 18px; }
+  .highlight-card ul li { margin-bottom: 10px; }
   .lead-bio { font-family: var(--font-body); font-size: .9rem; font-weight: 300; line-height: 1.9; color: var(--text-muted); margin-bottom: 36px; }
   .lead-certs { display: flex; flex-direction: column; gap: 12px; }
   .cert-item { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--light-gray); border-left: 3px solid var(--sage); }
@@ -424,9 +452,6 @@
   .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
   .footer-bottom p { font-family: var(--font-body); font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.3); }
   .footer-bottom p span { color: var(--pink); }
-  .footer-bank { display: flex; gap: 30px; }
-  .bank-item { font-family: var(--font-body); font-size: .7rem; font-weight: 300; color: rgba(255,255,255,.3); display: flex; align-items: center; gap: 8px; }
-  .bank-item i { color: var(--gold); }
 
   /* Logo SVG colors matching the brand */
   .logo-svg-pink { fill: var(--pink); }
@@ -461,8 +486,16 @@
     .form-row { grid-template-columns: 1fr; }
     .footer-top { grid-template-columns: 1fr; }
     .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
-    .footer-bank { flex-direction: column; gap: 12px; }
     .services-header { flex-direction: column; align-items: flex-start; }
+    .ceo-grid { grid-template-columns: 1fr; gap: 40px; }
+    .ceo-img-frame { min-height: 360px; }
+    .ceo-quote { padding: 24px 22px; margin-top: 24px; }
+    .ceo-quote p { font-size: .95rem; line-height: 1.7; }
+    .ceo-content .section-title { font-size: 2rem; }
+    .highlight-card { padding: 24px 22px; }
+    .highlight-card h3 { font-size: 1.1rem; }
+    .highlight-card p, .highlight-card ul { font-size: .85rem; }
+    .highlight-card ul { padding-left: 16px; }
   }
 </style>
 </head>
@@ -757,29 +790,40 @@
     </div>
     <div class="gallery-grid" id="galleryGrid">
       <div class="gallery-item reveal" data-cat="weddings">
+        <img src="white-wedding_04.jpeg" alt="Wedding ceremony">
         <div class="gallery-overlay"><i class="fas fa-expand"></i><span>Wedding Ceremony</span></div>
       </div>
       <div class="gallery-item reveal" data-cat="corporate" style="transition-delay:.1s">
+        <img src="corporate-4.jpeg" alt="Corporate gala event">
         <div class="gallery-overlay"><i class="fas fa-expand"></i><span>Corporate Gala</span></div>
       </div>
       <div class="gallery-item reveal" data-cat="birthdays" style="transition-delay:.2s">
+        <img src="birthday_10.jpeg" alt="Birthday celebration">
         <div class="gallery-overlay"><i class="fas fa-expand"></i><span>Birthday Celebration</span></div>
       </div>
       <div class="gallery-item reveal" data-cat="weddings" style="transition-delay:.3s">
+        <img src="white-wedding_03.jpeg" alt="White wedding">
         <div class="gallery-overlay"><i class="fas fa-expand"></i><span>White Wedding</span></div>
       </div>
       <div class="gallery-item reveal" data-cat="birthdays" style="transition-delay:.4s">
+        <img src="birthday_10.jpeg" alt="Children's party celebration">
         <div class="gallery-overlay"><i class="fas fa-expand"></i><span>Children's Fiesta</span></div>
       </div>
       <div class="gallery-item reveal" data-cat="weddings" style="transition-delay:.5s">
+        <img src="traditional_03.jpeg" alt="Traditional wedding">
         <div class="gallery-overlay"><i class="fas fa-expand"></i><span>Traditional Wedding</span></div>
       </div>
       <div class="gallery-item reveal" data-cat="corporate" style="transition-delay:.6s">
+        <img src="corporate-4.jpeg" alt="Product launch event">
         <div class="gallery-overlay"><i class="fas fa-expand"></i><span>Product Launch</span></div>
       </div>
       <div class="gallery-item reveal" data-cat="weddings" style="transition-delay:.7s">
+        <img src="white-wedding_09.JPEG" alt="Destination wedding">
         <div class="gallery-overlay"><i class="fas fa-expand"></i><span>Destination Wedding</span></div>
       </div>
+    </div>
+    <div class="gallery-cta reveal" style="text-align:center;margin-top:40px;">
+      <a href="gallery.html" class="btn-primary"><span><i class="fas fa-images" style="margin-right:10px;"></i>See Full Gallery</span></a>
     </div>
   </div>
 </section>
@@ -1002,6 +1046,43 @@
   </div>
 </section>
 
+<!-- CEO -->
+<section id="ceo">
+  <div class="blob blob-sage" style="width:320px;height:320px;top:-40px;right:-40px;opacity:.08;"></div>
+  <div class="section-inner">
+    <div class="ceo-grid">
+      <div class="ceo-visual reveal-left">
+        <div class="ceo-img-frame">
+          <img src="ceo.jpeg" alt="CEO of Events by Pejublack">
+        </div>
+        <div class="ceo-quote">
+          <p>"Every event is a chapter in someone's story — we design it with heart, care and unforgettable detail."</p>
+          <span>- Peju Black, Founder & CEO</span>
+        </div>
+      </div>
+      <div class="ceo-content reveal-right">
+        <span class="section-label">Leadership Story</span>
+        <h2 class="section-title">Meet our <span>CEO</span></h2>
+        <p class="ceo-bio">Peju Black leads Events by Pejublack with a passion for transformational experiences. With over a decade of event design expertise, she blends creativity, precision and warmth to deliver celebrations that feel personal, elegant and effortlessly beautiful.</p>
+        <div class="ceo-highlights">
+          <div class="highlight-card">
+            <h3>Vision</h3>
+            <p>Creating timeless celebrations that reflect each client’s story while raising the standard for luxury event planning.</p>
+          </div>
+          <div class="highlight-card">
+            <h3>Goals</h3>
+            <ul>
+              <li>Design signature experiences that surprise and delight</li>
+              <li>Build trusted partnerships across the event ecosystem</li>
+              <li>Empower clients with confidence from concept to day-of</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="blob blob-pink" style="width:400px;height:400px;top:-60px;right:-100px;opacity:.03;"></div>
@@ -1035,13 +1116,6 @@
             <div class="contact-detail-text">
               <strong>Location</strong>
               Lagos, Nigeria<br><span style="font-size:.76rem;color:var(--text-muted);">Serving events nationwide & beyond</span>
-            </div>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-detail-icon"><i class="fas fa-university"></i></div>
-            <div class="contact-detail-text">
-              <strong>Bank Transfer</strong>
-              Wema Bank: 0126376120<br>Stanbic IBTC: 0079886960<br><span style="font-size:.76rem;">Acc. Name: EventsByPejublack</span>
             </div>
           </div>
         </div>
@@ -1162,13 +1236,13 @@
     <hr class="footer-divider">
     <div class="footer-bottom">
       <p>&copy; 2026 Events by Pejublack. All rights reserved. Made with <span>♥</span> in Lagos.</p>
-      <div class="footer-bank">
-        <div class="bank-item"><i class="fas fa-university"></i>Wema Bank: 0126376120</div>
-        <div class="bank-item"><i class="fas fa-university"></i>Stanbic IBTC: 0079886960</div>
-      </div>
     </div>
   </div>
 </footer>
+
+<div class="whatsapp-float">
+  <a href="https://wa.me/2348134125119" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+</div>
 
 <script>
 // ─── LOADER ───

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Events by Pejublack — Creating Exciting Memories</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500;1,6..96,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
   :root {
@@ -18,6 +18,7 @@
     --text-muted: #6B6B6B;
     --border: rgba(212,35,122,0.12);
     --font-display: 'Playfair Display', serif;
+    --font-hero: 'Bodoni Moda', serif;
     --font-sub: 'Cormorant Garamond', serif;
     --font-body: 'Jost', sans-serif;
   }
@@ -91,7 +92,7 @@
   /* ─── HERO ─── */
   #hero {
     position: relative; height: 100vh; min-height: 700px; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; align-items: flex-end;
   }
   .hero-slides { position: absolute; inset: 0; }
   .hero-slide {
@@ -105,10 +106,17 @@
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: 0;
   }
-  .hero-slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26, 26, 26, 0.705) 0%, rgba(26, 26, 26, 0.719) 60%, rgba(51, 4, 27, 0.733) 100%); z-index: 1; }
-  /* Slide backgrounds — now using img tags for proper image rendering */
+  .hero-slide::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10, 8, 6, 0.90) 0%,
+      rgba(10, 8, 6, 0.55) 40%,
+      rgba(10, 8, 6, 0.18) 100%
+    );
+    z-index: 1;
+  }
 
-  /* Animated pattern overlay */
   .hero-pattern {
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
     background-image: radial-gradient(circle at 20% 80%, rgba(58, 9, 33, 0.829) 0%, transparent 50%),
@@ -116,51 +124,68 @@
                       radial-gradient(circle at 50% 50%, rgba(2, 36, 20, 0.04) 0%, transparent 60%);
   }
 
+  /* Hero content — bottom-left, like the reference */
   .hero-content {
-    position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 900px;
+    position: relative; z-index: 2;
+    padding: 0 70px 72px;
+    max-width: 820px;
     animation: heroContentIn 1.4s cubic-bezier(.22,.61,.36,1) 2.4s both;
   }
   @keyframes heroContentIn { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
 
   .hero-eyebrow {
-    font-family: var(--font-body); font-weight: 300; font-size: .72rem; letter-spacing: .5em;
-    text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block;
+    font-family: var(--font-body); font-weight: 300; font-size: .68rem; letter-spacing: .5em;
+    text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 22px; display: flex;
+    align-items: center; gap: 14px;
     opacity: 0; animation: fadeInUp .8s ease 3s forwards;
   }
+  .hero-eyebrow::before { content: ''; display: block; width: 36px; height: 1px; background: rgba(255,255,255,.4); }
+
   .hero-title {
-    font-family: var(--font-display); font-style: italic; font-size: clamp(3rem, 7vw, 6rem);
-    color: var(--white); line-height: 1.05; font-weight: 500; margin-bottom: 10px;
+    font-family: var(--font-hero);
+    font-style: italic;
+    font-size: clamp(2.8rem, 6.5vw, 5.6rem);
+    color: var(--white);
+    line-height: 1.08;
+    font-weight: 500;
+    margin-bottom: 22px;
+    letter-spacing: -0.01em;
     opacity: 0; animation: fadeInUp .8s ease 3.2s forwards;
   }
-  .hero-title span { color: var(--gold); }
   .hero-subtitle {
-    font-family: var(--font-sub); font-style: italic; font-size: clamp(1rem, 2.5vw, 1.5rem);
-    color: rgba(255,255,255,.7); letter-spacing: .06em; margin-bottom: 50px;
+    font-family: var(--font-sub); font-style: italic; font-size: clamp(.95rem, 2vw, 1.3rem);
+    color: rgba(255,255,255,.65); letter-spacing: .06em; margin-bottom: 44px;
     opacity: 0; animation: fadeInUp .8s ease 3.4s forwards;
   }
   .hero-btns {
-    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    display: flex; gap: 14px; flex-wrap: wrap;
     opacity: 0; animation: fadeInUp .8s ease 3.6s forwards;
   }
+
+  /* Primary button — filled pink */
   .btn-primary {
-    font-family: var(--font-body); font-weight: 400; font-size: .78rem; letter-spacing: .2em;
-    text-transform: uppercase; padding: 16px 42px; background: var(--pink); color: var(--white);
-    border: none; cursor: pointer; text-decoration: none; display: inline-block;
+    font-family: var(--font-body); font-weight: 400; font-size: .75rem; letter-spacing: .22em;
+    text-transform: uppercase; padding: 15px 38px; background: var(--pink); color: var(--white);
+    border: 1.5px solid var(--pink);
+    cursor: pointer; text-decoration: none; display: inline-block;
     transition: all .3s ease; position: relative; overflow: hidden;
   }
   .btn-primary::before { content: ''; position: absolute; inset: 0; background: var(--charcoal); transform: translateX(-101%); transition: transform .4s ease; z-index: 0; }
   .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary:hover { border-color: var(--charcoal); }
   .btn-primary span { position: relative; z-index: 1; }
+
+  /* Outline button — gold tinted */
   .btn-outline {
-    font-family: var(--font-body); font-weight: 400; font-size: .78rem; letter-spacing: .2em;
-    text-transform: uppercase; padding: 15px 42px; background: transparent; color: var(--white);
-    border: 1px solid rgba(255,255,255,.5); cursor: pointer; text-decoration: none; display: inline-block;
+    font-family: var(--font-body); font-weight: 400; font-size: .75rem; letter-spacing: .22em;
+    text-transform: uppercase; padding: 14px 38px; background: transparent; color: var(--white);
+    border: 1.5px solid rgba(245, 166, 35, 0.7); cursor: pointer; text-decoration: none; display: inline-block;
     transition: all .3s ease;
   }
-  .btn-outline:hover { background: rgba(255,255,255,.1); border-color: var(--white); }
+  .btn-outline:hover { background: rgba(245,166,35,.15); border-color: var(--gold); color: var(--white); }
 
   /* Slide indicators */
-  .hero-dots { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; gap: 10px; }
+  .hero-dots { position: absolute; bottom: 40px; right: 70px; z-index: 3; display: flex; gap: 10px; }
   .hero-dot { width: 28px; height: 2px; background: rgba(255,255,255,.3); cursor: pointer; transition: all .3s; }
   .hero-dot.active { background: var(--gold); width: 52px; }
 
@@ -171,10 +196,10 @@
   .hero-arrow.next { right: 40px; }
 
   /* Scroll indicator */
-  .scroll-hint { position: absolute; bottom: 42px; right: 50px; z-index: 3; display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,.5); font-family: var(--font-body); font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; animation: scrollPulse 2.5s ease infinite 4s; }
-  .scroll-hint i { font-size: .9rem; animation: scrollBounce 2s ease infinite 4s; }
+  .scroll-hint { position: absolute; bottom: 48px; left: 70px; z-index: 3; display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,.35); font-family: var(--font-body); font-size: .65rem; letter-spacing: .22em; text-transform: uppercase; animation: scrollPulse 2.5s ease infinite 4s; }
+  .scroll-hint i { font-size: .8rem; animation: scrollBounce 2s ease infinite 4s; }
   @keyframes scrollBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
-  @keyframes scrollPulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+  @keyframes scrollPulse { 0%,100% { opacity: .35; } 50% { opacity: .7; } }
 
   /* ─── SECTION SHARED ─── */
   section { position: relative; overflow: hidden; }
@@ -184,7 +209,7 @@
   .section-title { font-family: var(--font-display); font-style: italic; font-size: clamp(2rem, 4vw, 3.2rem); color: var(--charcoal); line-height: 1.15; font-weight: 500; }
   .section-title span { color: var(--pink); }
 
-  /* ─── FLOATING BLOBS (logo-inspired bg decoration) ─── */
+  /* ─── FLOATING BLOBS ─── */
   .blob { position: absolute; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; pointer-events: none; opacity: .045; z-index: 0; animation: blobFloat 10s ease-in-out infinite; }
   .blob-pink { background: var(--pink); }
   .blob-gold { background: var(--gold); animation-delay: -3s; }
@@ -219,7 +244,6 @@
     overflow: hidden;
   }
   .about-img-frame::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(212,35,122,.2), transparent); }
-  /* Decorative floating card */
   .about-float-card {
     position: absolute; bottom: -28px; right: -28px; background: var(--white); padding: 24px 30px;
     box-shadow: 0 20px 60px rgba(0,0,0,.1); z-index: 2; min-width: 200px;
@@ -313,7 +337,6 @@
   .gallery-item:hover .gallery-overlay { opacity: 1; transform: translateY(0); }
   .gallery-overlay i { color: var(--white); font-size: 1.5rem; margin-bottom: 10px; }
   .gallery-overlay span { font-family: var(--font-body); font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--white); }
-  /* Gallery item backgrounds */
   .gallery-item:nth-child(1) { background: linear-gradient(135deg, #1a0d12 0%, #4a1a2c 50%, #7b3050 100%); }
   .gallery-item:nth-child(2) { background: linear-gradient(135deg, #0d1a0d 0%, #1a3319 40%, #2a5528 100%); }
   .gallery-item:nth-child(3) { background: linear-gradient(135deg, #1a160a 0%, #3d3218 40%, #6b5828 100%); }
@@ -322,12 +345,10 @@
   .gallery-item:nth-child(6) { background: linear-gradient(135deg, #0a1a16 0%, #183d33 40%, #286b5a 100%); }
   .gallery-item:nth-child(7) { background: linear-gradient(135deg, #1a1a0a 0%, #3d3318 40%, #6b5c28 100%); }
   .gallery-item:nth-child(8) { background: linear-gradient(135deg, #140a1a 0%, #2a1835 40%, #4a2860 100%); }
-
-  /* decorative pattern inside gallery items */
   .gallery-item::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(255,255,255,.06) 0%, transparent 70%); }
   .gallery-cta { margin-top: 24px; }
   .gallery-cta .btn-primary { padding: 14px 34px; }
-  .whatsapp-float { position: fixed; right: 24px; bottom: 24px; width: 56px; height: 56px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 40px rgba(0,0,0,.18); z-index: 9999; transition: transform .2s ease, box-shadow .2s ease; }
+  .whatsapp-float { position: fixed; right: 24px; bottom: 24px; width: 56px; height: 56px; border-radius: 50%; background: #D4237A; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 40px rgba(0,0,0,.18); z-index: 9999; transition: transform .2s ease, box-shadow .2s ease; }
   .whatsapp-float:hover { transform: translateY(-3px); box-shadow: 0 22px 50px rgba(0,0,0,.22); }
   .whatsapp-float a { color: #fff; font-size: 1.35rem; line-height: 1; }
 
@@ -453,7 +474,6 @@
   .footer-bottom p { font-family: var(--font-body); font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.3); }
   .footer-bottom p span { color: var(--pink); }
 
-  /* Logo SVG colors matching the brand */
   .logo-svg-pink { fill: var(--pink); }
   .logo-svg-gold { fill: var(--gold); }
   .logo-svg-sage { fill: var(--sage); }
@@ -496,6 +516,14 @@
     .highlight-card h3 { font-size: 1.1rem; }
     .highlight-card p, .highlight-card ul { font-size: .85rem; }
     .highlight-card ul { padding-left: 16px; }
+
+    /* Mobile hero adjustments */
+    .hero-content { padding: 0 28px 60px; }
+    .hero-title { font-size: clamp(2.4rem, 9vw, 3.6rem); }
+    .hero-dots { right: 28px; bottom: 28px; }
+    .scroll-hint { display: none; }
+    .hero-btns { gap: 12px; }
+    .btn-primary, .btn-outline { padding: 13px 28px; font-size: .72rem; }
   }
 </style>
 </head>
@@ -521,6 +549,7 @@
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <button class="mobile-nav-close" onclick="closeMobileNav()"><i class="fas fa-times"></i></button>
+  <a href="#hero" onclick="closeMobileNav()">Home</a>
   <a href="#about" onclick="closeMobileNav()">About</a>
   <a href="#services" onclick="closeMobileNav()">Services</a>
   <a href="#packages" onclick="closeMobileNav()">Packages</a>
@@ -537,7 +566,7 @@
       <ellipse cx="32" cy="28" rx="15" ry="20" fill="#F5A623" opacity=".88" transform="rotate(10 32 28)"/>
       <ellipse cx="42" cy="36" rx="12" ry="16" fill="#7BC8A4" opacity=".82" transform="rotate(30 42 36)"/>
     </svg>
-    <span class="nav-logo-text">Events by Pejublack</span>
+    <!-- <span class="nav-logo-text">Events by Pejublack</span> -->
   </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
@@ -565,17 +594,16 @@
   </div>
   <div class="hero-pattern"></div>
 
-  <!-- Ambient floating shapes -->
   <div style="position:absolute;top:15%;left:8%;width:300px;height:400px;border-radius:60% 40% 30% 70%/60% 30% 70% 40%;background:var(--pink);opacity:.04;animation:blobFloat 12s ease-in-out infinite;pointer-events:none;"></div>
   <div style="position:absolute;bottom:10%;right:5%;width:240px;height:320px;border-radius:40% 60% 70% 30%/40% 70% 30% 60%;background:var(--gold);opacity:.05;animation:blobFloat 10s ease-in-out infinite 3s;pointer-events:none;"></div>
 
   <div class="hero-content">
-    <span class="hero-eyebrow"><i class="fas fa-diamond" style="font-size:.6rem;"></i> &nbsp; Lagos Premier Event House &nbsp; <i class="fas fa-diamond" style="font-size:.6rem;"></i></span>
-    <h1 class="hero-title">Creating <span>Exciting</span><br>Memories for<br><em>Your Events</em></h1>
+    <span class="hero-eyebrow">Lagos Premier Event House</span>
+    <h1 class="hero-title">Creating<br><em>Exciting</em><br>Memories</h1>
     <p class="hero-subtitle">Full-Service Event Planning, Design & Management</p>
     <div class="hero-btns">
-      <a href="gallery.html" class="btn-primary"><span><i class="fas fa-images" style="margin-right:10px;"></i>View Gallery</span></a>
-      <a href="form.html" class="btn-outline"><i class="fas fa-envelope" style="margin-right:10px;"></i>Get In Touch</a>
+      <a href="gallery.html" class="btn-primary"><span>View Gallery</span></a>
+      <a href="form.html" class="btn-outline">Get In Touch</a>
     </div>
   </div>
 
@@ -823,7 +851,7 @@
       </div>
     </div>
     <div class="gallery-cta reveal" style="text-align:center;margin-top:40px;">
-      <a href="gallery.html" class="btn-primary"><span><i class="fas fa-images" style="margin-right:10px;"></i>See Full Gallery</span></a>
+      <a href="gallery.html" class="btn-primary"><span>See Full Gallery</span></a>
     </div>
   </div>
 </section>
@@ -896,7 +924,6 @@
   </div>
   <div class="testimonial-track-wrapper" style="margin-top:60px;">
     <div class="testimonial-track" id="testimTrack">
-      <!-- Repeated for seamless loop -->
       <div class="testimonial-card">
         <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
         <i class="fas fa-quote-left t-quote-icon"></i>
@@ -1067,7 +1094,7 @@
         <div class="ceo-highlights">
           <div class="highlight-card">
             <h3>Vision</h3>
-            <p>Creating timeless celebrations that reflect each client’s story while raising the standard for luxury event planning.</p>
+            <p>Creating timeless celebrations that reflect each client's story while raising the standard for luxury event planning.</p>
           </div>
           <div class="highlight-card">
             <h3>Goals</h3>

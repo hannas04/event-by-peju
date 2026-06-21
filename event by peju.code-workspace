@@ -4,11 +4,13 @@
 			"path": "."
 		},
 		{
-			"path": "../../../Desktop/img"
+			"path": "../../../Desktop/pejublack-backend"
+		},
+		{
+			"path": "../../../Desktop/form-demo"
 		}
 	],
 	"settings": {
-		"liveServer.settings.port": 5503,
-		"liveServer.settings.multiRootWorkspaceName": "event by peju"
+		"liveServer.settings.port": 5504
 	}
 }

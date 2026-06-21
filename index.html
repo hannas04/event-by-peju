@@ -105,15 +105,15 @@
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: 0;
   }
-  .hero-slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,26,26,.72) 0%, rgba(26,26,26,.35) 60%, rgba(212,35,122,.12) 100%); z-index: 1; }
+  .hero-slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26, 26, 26, 0.856) 0%, rgba(26, 26, 26, 0.877) 60%, rgba(51, 4, 27, 0.12) 100%); z-index: 1; }
   /* Slide backgrounds — now using img tags for proper image rendering */
 
   /* Animated pattern overlay */
   .hero-pattern {
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background-image: radial-gradient(circle at 20% 80%, rgba(212, 35, 120, 0.829) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 20%, rgba(245,166,35,.06) 0%, transparent 50%),
-                      radial-gradient(circle at 50% 50%, rgba(123,200,164,.04) 0%, transparent 60%);
+    background-image: radial-gradient(circle at 20% 80%, rgba(58, 9, 33, 0.829) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(41, 26, 3, 0.06) 0%, transparent 50%),
+                      radial-gradient(circle at 50% 50%, rgba(2, 36, 20, 0.04) 0%, transparent 60%);
   }
 
   .hero-content {
@@ -521,13 +521,13 @@
 <section id="hero">
   <div class="hero-slides">
     <div class="hero-slide active">
-      <img src="img-2.jpeg" alt="Wedding Event Slide 1">
+      <img src="hero-1.JPEG" alt="Wedding Event Slide 1">
     </div>
     <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&h=800&fit=crop" alt="Corporate Event Slide 2">
+      <img src="hero-2.jpeg" alt="Corporate Event Slide 2">
     </div>
     <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&h=800&fit=crop" alt="Party Event Slide 3">
+      <img src="hero-3.jpeg" alt="Party Event Slide 3">
     </div>
   </div>
   <div class="hero-pattern"></div>

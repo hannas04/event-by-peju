@@ -168,14 +168,7 @@
   .layout-e { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 260px 260px; gap: 10px; }
   .layout-e .img-wide-2 { grid-column: span 2; }
 
-  /* ── LAYOUT F: Duo + strip (Event 6 - Pre-wedding) ── */
-  .layout-f { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .layout-f .img-strip { grid-column: span 2; height: 200px; }
 
-  /* ── LAYOUT G: Panoramic (Event 7 - Children's) ── */
-  .layout-g { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 280px 200px; gap: 10px; }
-  .layout-g .img-pano { grid-column: span 4; height: 240px; }
-  .layout-g .img-sq {}
 
   /* ── SHARED IMAGE WRAPPER ── */
   .img-wrap {
@@ -409,8 +402,6 @@
   <div class="sidebar-dot" data-label="Birthdays" onclick="scrollToEvent('event3')"></div>
   <div class="sidebar-dot" data-label="Corporate" onclick="scrollToEvent('event4')"></div>
   <div class="sidebar-dot" data-label="Social" onclick="scrollToEvent('event5')"></div>
-  <div class="sidebar-dot" data-label="Pre-Wedding" onclick="scrollToEvent('event6')"></div>
-  <div class="sidebar-dot" data-label="Children's" onclick="scrollToEvent('event7')"></div>
 </div>
 
 <!-- PAGE HERO -->
@@ -421,15 +412,13 @@
   <div class="page-hero-inner">
     <div class="page-hero-eyebrow">Our Portfolio</div>
     <h1 class="page-hero-title">Memories We've<br><span>Crafted</span></h1>
-    <p class="page-hero-sub">Seven event categories. Every occasion elevated to art.</p>
+    <p class="page-hero-sub">Five event categories. Every occasion elevated to art.</p>
     <div class="event-count-row">
       <button class="event-pill active" onclick="scrollToEvent('event1')"><i class="fas fa-rings-wedding" style="margin-right:6px;font-size:.7rem;"></i>Weddings</button>
       <button class="event-pill" onclick="scrollToEvent('event2')"><i class="fas fa-drum" style="margin-right:6px;font-size:.7rem;"></i>Traditional</button>
       <button class="event-pill" onclick="scrollToEvent('event3')"><i class="fas fa-birthday-cake" style="margin-right:6px;font-size:.7rem;"></i>Birthdays</button>
       <button class="event-pill" onclick="scrollToEvent('event4')"><i class="fas fa-briefcase" style="margin-right:6px;font-size:.7rem;"></i>Corporate</button>
       <button class="event-pill" onclick="scrollToEvent('event5')"><i class="fas fa-glass-cheers" style="margin-right:6px;font-size:.7rem;"></i>Social</button>
-      <button class="event-pill" onclick="scrollToEvent('event6')"><i class="fas fa-heart" style="margin-right:6px;font-size:.7rem;"></i>Pre-Wedding</button>
-      <button class="event-pill" onclick="scrollToEvent('event7')"><i class="fas fa-child" style="margin-right:6px;font-size:.7rem;"></i>Children's</button>
     </div>
   </div>
 </div>
@@ -449,15 +438,11 @@
     <span class="marquee-item">Birthday Celebrations <i class="fas fa-circle"></i></span>
     <span class="marquee-item">Corporate Events <i class="fas fa-circle"></i></span>
     <span class="marquee-item">Social Gatherings <i class="fas fa-circle"></i></span>
-    <span class="marquee-item">Pre-Wedding Shoots <i class="fas fa-circle"></i></span>
-    <span class="marquee-item">Children's Parties <i class="fas fa-circle"></i></span>
     <span class="marquee-item">Weddings <i class="fas fa-circle"></i></span>
     <span class="marquee-item">Traditional Ceremonies <i class="fas fa-circle"></i></span>
     <span class="marquee-item">Birthday Celebrations <i class="fas fa-circle"></i></span>
     <span class="marquee-item">Corporate Events <i class="fas fa-circle"></i></span>
     <span class="marquee-item">Social Gatherings <i class="fas fa-circle"></i></span>
-    <span class="marquee-item">Pre-Wedding Shoots <i class="fas fa-circle"></i></span>
-    <span class="marquee-item">Children's Parties <i class="fas fa-circle"></i></span>
   </div>
 </div>
 
@@ -668,13 +653,13 @@
         <div class="img-tag"><span>Venue Transformation</span></div>
       </div>
       <div class="img-wrap img-wide-2" onclick="openLightbox('birthday', 4)">
-        <img src="birthday_08.jpeg" alt="Birthday guests dancing party">
+        <img src="birthday_10.jpeg" alt="Birthday guests dancing party">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>The Celebration</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('birthday', 5)">
-        <img src="birthday_05.jpeg" alt="Birthday photo booth setup">
+        <img src="birthday_09.jpeg" alt="Birthday photo booth setup">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Photo Moments</span></div>
@@ -705,38 +690,38 @@
     <!-- LAYOUT D: Feature + 4 grid -->
     <div class="layout-d reveal">
       <div class="img-wrap img-feature" onclick="openLightbox('corporate', 0)">
-        <img src="corporate_01.jpg" alt="Corporate event gala Lagos venue">
+        <img src="corporate-1.jpeg" alt="Corporate event gala Lagos venue">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-badge">Corporate</div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Gala Night — Main Stage</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('corporate', 1)">
-        <img src="corporate_02.jpg" alt="Corporate dinner table setting">
+        <img src="corporate-2.jpeg" alt="Corporate dinner table setting">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Dinner Table Setting</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('corporate', 2)">
-        <img src="corporate_03.jpg" alt="Product launch event decoration">
+        <img src="corporate-3.jpeg" alt="Product launch event decoration">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Product Launch</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('corporate', 3)">
-        <img src="corporate_04.jpg" alt="Corporate award ceremony stage">
+        <img src="corporate-4.jpeg" alt="Corporate award ceremony stage">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Awards Night</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('corporate', 4)">
-        <img src="corporate_05.jpg" alt="Conference event setup branding">
+        <img src="corporate-5.jpeg" alt="Conference event setup branding">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Conference Setup</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('corporate', 5)">
-        <img src="corporate_06.jpg" alt="Networking cocktail event Lagos">
+        <img src="corporate-6.jpeg" alt="Networking cocktail event Lagos">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Cocktail Networking</span></div>
@@ -768,168 +753,49 @@
     <!-- LAYOUT C: Horizontal strip -->
     <div class="layout-c reveal">
       <div class="img-wrap img-wide" style="min-height:320px;" onclick="openLightbox('social', 0)">
-        <img src="social_01.jpg" alt="Social gathering event decoration Lagos">
+        <img src="social-01.jpeg" alt="Social gathering event decoration Lagos">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-badge">Social</div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>The Perfect Setting</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('social', 1)">
-        <img src="social_02.jpg" alt="Guests enjoying social event">
+        <img src="social-02.jpeg" alt="Guests enjoying social event">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Joyful Moments</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('social', 2)">
-        <img src="social_03.jpg" alt="Social event catering food display">
+        <img src="social-03.jpeg" alt="Social event catering food display">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Catering Display</span></div>
       </div>
       <div class="img-wrap img-wide" onclick="openLightbox('social', 3)">
-        <img src="social_04.jpg" alt="Social gathering outdoor event">
+        <img src="social-04.jpeg" alt="Social gathering outdoor event">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Outdoor Elegance</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('social', 4)">
-        <img src="social_05.jpg" alt="Social event lighting atmosphere">
+        <img src="social-05.jpeg" alt="Social event lighting atmosphere">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Ambient Lighting</span></div>
       </div>
       <div class="img-wrap" onclick="openLightbox('social', 5)">
-        <img src="social_06.jpg" alt="Group photo social event Lagos">
+        <img src="social-06.jpeg" alt="Group photo social event Lagos">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
         <div class="img-tag"><span>Together We Celebrate</span></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ═══════════════════════════════════════
-     EVENT 6 — PRE-WEDDING SHOOTS
-════════════════════════════════════════ -->
-<section class="gallery-section" style="background:var(--cream);" id="event6">
-  <div class="blob" style="width:300px;height:300px;top:60px;left:-60px;background:var(--sage);"></div>
-  <div class="section-inner">
-    <div class="gs-header reveal">
-      <div class="gs-header-left">
-        <div class="gs-label">Event 06</div>
-        <h2 class="gs-title">Pre-Wedding <span>Shoots</span></h2>
-        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:var(--text-muted);margin-top:8px;font-weight:300;">Capturing love stories before the big day</p>
-      </div>
-      <div class="gs-header-right">
-        <div class="gs-count">06</div>
-        <div class="photo-count-badge"><i class="fas fa-images"></i> 6 Photographs</div>
-      </div>
-    </div>
-
-    <!-- LAYOUT F: Duo portraits + wide strip -->
-    <div class="layout-f reveal">
-      <div class="img-wrap" style="min-height:420px;" onclick="openLightbox('prewedding', 0)">
-        <img src="prewedding_01.jpg" alt="Pre-wedding couple photo shoot Lagos">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-badge">Pre-Wedding</div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Love in Frame</span></div>
-      </div>
-      <div class="img-wrap" style="min-height:420px;" onclick="openLightbox('prewedding', 1)">
-        <img src="prewedding_02.jpg" alt="Pre-wedding shoot outdoor Lagos">
+       <!-- <div class="img-wrap" onclick="openLightbox('social', 5)">
+        <img src="social-09.jpeg" alt="Group photo social event Lagos">
         <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
         <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Golden Hour</span></div>
-      </div>
-      <div class="img-wrap img-strip" onclick="openLightbox('prewedding', 2)">
-        <img src="prewedding_03.jpg" alt="Pre-wedding intimate couple moment">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>An Intimate Moment</span></div>
-      </div>
-      <div class="img-wrap" style="min-height:360px;" onclick="openLightbox('prewedding', 3)">
-        <img src="prewedding_04.jpg" alt="Couple styled pre-wedding photo">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Styled & Sublime</span></div>
-      </div>
-      <div class="img-wrap" style="min-height:360px;" onclick="openLightbox('prewedding', 4)">
-        <img src="prewedding_05.jpg" alt="Pre-wedding fashion shoot Nigeria">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Effortless Elegance</span></div>
-      </div>
-      <div class="img-wrap img-strip" onclick="openLightbox('prewedding', 5)">
-        <img src="prewedding_06.jpg" alt="Couple laughing together pre-wedding">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Pure Joy</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ═══════════════════════════════════════
-     EVENT 7 — CHILDREN'S PARTIES
-════════════════════════════════════════ -->
-<section class="gallery-section" style="background:var(--charcoal);" id="event7">
-  <div class="blob" style="width:420px;height:420px;bottom:-80px;right:-80px;background:var(--gold);opacity:.04;"></div>
-  <div class="section-inner">
-    <div class="gs-header reveal">
-      <div class="gs-header-left">
-        <div class="gs-label gold">Event 07</div>
-        <h2 class="gs-title white">Children's <span class="gold">Parties</span></h2>
-        <p style="font-family:var(--font-sub);font-style:italic;font-size:1rem;color:rgba(255,255,255,.45);margin-top:8px;font-weight:300;">Where imagination runs wild and magic comes alive</p>
-      </div>
-      <div class="gs-header-right">
-        <div class="gs-count white-count">07</div>
-        <div class="photo-count-badge light"><i class="fas fa-images"></i> 6 Photographs</div>
-      </div>
-    </div>
-
-    <!-- LAYOUT G: Panoramic + 4 squares -->
-    <div class="layout-g reveal">
-      <div class="img-wrap img-pano" onclick="openLightbox('childrens', 0)">
-        <img src="childrens_01.jpg" alt="Children's party themed setup Lagos">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-badge">Children's Party</div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>The Spectacular Theme Setup</span></div>
-      </div>
-      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 1)">
-        <img src="childrens_02.jpg" alt="Birthday child superhero costume party">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Little Superhero</span></div>
-      </div>
-      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 2)">
-        <img src="childrens_03.jpg" alt="Children party balloon decorations">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Balloon Wonderland</span></div>
-      </div>
-      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 3)">
-        <img src="childrens_04.jpg" alt="Children's birthday cake themed">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>The Birthday Cake</span></div>
-      </div>
-      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 4)">
-        <img src="childrens_05.jpg" alt="Kids enjoying party activities">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Pure Childhood Joy</span></div>
-      </div>
-      <div class="img-wrap img-sq" onclick="openLightbox('childrens', 5)">
-        <img src="childrens_06.jpg" alt="Family photo children's party">
-        <div class="img-overlay"><i class="fas fa-expand-alt"></i></div>
-        <div class="img-expand"><i class="fas fa-expand"></i></div>
-        <div class="img-tag"><span>Family Memories</span></div>
-      </div>
+        <div class="img-tag"><span>Together We Celebrate</span></div>
+      </div> -->
+       
     </div>
   </div>
 </section>
@@ -994,8 +860,6 @@
           <li><a href="#event3"><i class="fas fa-chevron-right"></i>Birthday Celebrations</a></li>
           <li><a href="#event4"><i class="fas fa-chevron-right"></i>Corporate Events</a></li>
           <li><a href="#event5"><i class="fas fa-chevron-right"></i>Social Gatherings</a></li>
-          <li><a href="#event6"><i class="fas fa-chevron-right"></i>Pre-Wedding Shoots</a></li>
-          <li><a href="#event7"><i class="fas fa-chevron-right"></i>Children's Parties</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1062,7 +926,7 @@ const observer = new IntersectionObserver(entries=>{
 revealEls.forEach(el=>observer.observe(el));
 
 // ── SIDEBAR DOT ACTIVE STATE ──
-const sections = ['event1','event2','event3','event4','event5','event6','event7'];
+const sections = ['event1','event2','event3','event4','event5'];
 const sidebarDots = document.querySelectorAll('.sidebar-dot');
 const pillBtns = document.querySelectorAll('.event-pill');
 
@@ -1093,8 +957,6 @@ const galleryData = {
   birthday:    ['birthday_01.jpg','birthday_02.jpg','birthday_03.jpg','birthday_04.jpg','birthday_05.jpg','birthday_06.jpg'],
   corporate:   ['corporate_01.jpg','corporate_02.jpg','corporate_03.jpg','corporate_04.jpg','corporate_05.jpg','corporate_06.jpg'],
   social:      ['social_01.jpg','social_02.jpg','social_03.jpg','social_04.jpg','social_05.jpg','social_06.jpg'],
-  prewedding:  ['prewedding_01.jpg','prewedding_02.jpg','prewedding_03.jpg','prewedding_04.jpg','prewedding_05.jpg','prewedding_06.jpg'],
-  childrens:   ['childrens_01.jpg','childrens_02.jpg','childrens_03.jpg','childrens_04.jpg','childrens_05.jpg','childrens_06.jpg'],
 };
 
 const captions = {
@@ -1103,8 +965,6 @@ const captions = {
   birthday:    ['Balloon Installation','Celebrant Portrait','Statement Cake','Venue Transformation','The Celebration','Photo Moments'],
   corporate:   ['Gala Night','Dinner Setting','Product Launch','Awards Night','Conference Setup','Cocktail Networking'],
   social:      ['Perfect Setting','Joyful Moments','Catering Display','Outdoor Elegance','Ambient Lighting','Together We Celebrate'],
-  prewedding:  ['Love in Frame','Golden Hour','An Intimate Moment','Styled & Sublime','Effortless Elegance','Pure Joy'],
-  childrens:   ['Theme Setup','Little Superhero','Balloon Wonderland','Birthday Cake','Pure Joy','Family Memories'],
 };
 
 let lbCategory='', lbIndex=0;

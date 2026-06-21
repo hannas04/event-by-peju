@@ -21,7 +21,7 @@ const app = express();
 
 // Allow requests from your frontend
 app.use(cors({
-  origin: '*', // ⚠️ For production, replace '*' with your actual domain: 'https://yourdomain.com'
+  origin: 'https://event-by-peju.vercel.app', // ⚠️ For production, replace '*' with your actual domain: 'https://yourdomain.com'
   methods: ['POST', 'GET'],
   allowedHeaders: ['Content-Type']
 }));

@@ -1168,7 +1168,7 @@ async function submitForm() {
 
   try {
     // ── STEP 5: SEND DATA TO BACKEND ──
-    const response = await fetch(`https://hannas04.github.io/event-by-peju/submit-enquiry`, {
+    const response = await fetch(`http://localhost:5000/submit-enquiry`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

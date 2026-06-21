@@ -183,7 +183,7 @@ Submitted on: ${new Date().toLocaleString()}
     });
   }
 });
-
+app.post('/submit-enquiry', async()=>{console.log("testing 1-2")});
 // ════════════════════════════════════════════════════════════════
 // TEST ENDPOINT (optional — to test if server is running)
 // ════════════════════════════════════════════════════════════════

@@ -21,7 +21,7 @@ const app = express();
 
 // Allow requests from your frontend
 app.use(cors({
-  origin: 'https://hannas04.github.io/event-by-peju', // ⚠️ For production, replace '*' with your actual domain: 'https://yourdomain.com'
+  origin: '*', // ⚠️ For production, replace '*' with your actual domain: 'https://yourdomain.com'
   methods: ['POST', 'GET'],
   allowedHeaders: ['Content-Type']
 }));
